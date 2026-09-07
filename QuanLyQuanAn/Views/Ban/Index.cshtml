@@ -1,0 +1,85 @@
+﻿@model IEnumerable<QuanLyQuanAn.Models.Ban>
+
+@{
+    ViewData["Title"] = "Quản lý bàn";
+}
+
+<h1>Quản lý bàn</h1>
+
+<form method="get" class="mb-3">
+
+    <input type="text"
+           name="search"
+           value="@ViewBag.Search"
+           placeholder="Nhập số bàn..."
+           class="form-control"
+           style="width: 250px; display: inline-block;" />
+
+    <button type="submit"
+            class="btn btn-primary">
+        Tìm kiếm
+    </button>
+
+</form>
+
+<a asp-action="Create"
+   class="btn btn-success mb-3">
+    Thêm bàn
+</a>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Mã bàn</th>
+            <th>Số bàn</th>
+            <th>Số chỗ</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.MaBan
+                </td>
+
+                <td>
+                    @item.SoBan
+                </td>
+
+                <td>
+                    @item.SoCho
+                </td>
+
+                <td>
+                    @item.TrangThai
+                </td>
+
+                <td>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.MaBan"
+                       class="btn btn-warning btn-sm">
+                        Sửa
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.MaBan"
+                       class="btn btn-danger btn-sm">
+                        Xóa
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

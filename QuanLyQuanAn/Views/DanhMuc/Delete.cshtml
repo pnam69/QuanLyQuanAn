@@ -1,0 +1,53 @@
+﻿@model QuanLyQuanAn.Models.DanhMuc
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h1>Xóa danh mục</h1>
+
+<h3>Bạn có chắc muốn xóa danh mục này?</h3>
+
+<div>
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            Mã danh mục
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.MaDM
+        </dd>
+
+        <dt class="col-sm-3">
+            Tên danh mục
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.TenDM
+        </dd>
+
+        <dt class="col-sm-3">
+            Mô tả
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.MoTa
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete" method="post">
+
+        <input type="hidden" asp-for="MaDM" />
+
+        <button type="submit" class="btn btn-danger">
+            Xóa
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Hủy
+        </a>
+
+    </form>
+</div>

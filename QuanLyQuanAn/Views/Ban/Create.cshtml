@@ -1,0 +1,77 @@
+﻿@model QuanLyQuanAn.Models.Ban
+
+@{
+    ViewData["Title"] = "Thêm bàn";
+}
+
+<h1>Thêm bàn</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+
+        <label asp-for="SoBan"
+               class="form-label">
+        </label>
+
+        <input asp-for="SoBan"
+               class="form-control" />
+
+        <span asp-validation-for="SoBan"
+              class="text-danger">
+        </span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="SoCho"
+               class="form-label">
+        </label>
+
+        <input asp-for="SoCho"
+               type="number"
+               class="form-control" />
+
+        <span asp-validation-for="SoCho"
+              class="text-danger">
+        </span>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label asp-for="TrangThai"
+               class="form-label">
+        </label>
+
+        <select asp-for="TrangThai"
+                class="form-select">
+
+            <option value="Trống">
+                Trống
+            </option>
+
+            <option value="Đang phục vụ">
+                Đang phục vụ
+            </option>
+
+            <option value="Đã đặt">
+                Đã đặt
+            </option>
+
+        </select>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Thêm
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

@@ -1,0 +1,64 @@
+﻿@model QuanLyQuanAn.Models.MonAn
+
+@{
+    ViewData["Title"] = "Xóa món ăn";
+}
+
+<h1>Xóa món ăn</h1>
+
+<h3>Bạn có chắc muốn xóa món ăn này?</h3>
+
+<div>
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            Mã món
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.MaMon
+        </dd>
+
+        <dt class="col-sm-3">
+            Tên món
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.TenMon
+        </dd>
+
+        <dt class="col-sm-3">
+            Danh mục
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.DanhMuc?.TenDM
+        </dd>
+
+        <dt class="col-sm-3">
+            Đơn giá
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.DonGia.ToString("N0") VNĐ
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete" method="post">
+
+        <input type="hidden"
+               asp-for="MaMon" />
+
+        <button type="submit"
+                class="btn btn-danger">
+            Xóa
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Hủy
+        </a>
+
+    </form>
+</div>

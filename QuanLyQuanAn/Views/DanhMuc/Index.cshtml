@@ -1,0 +1,64 @@
+﻿@model IEnumerable<QuanLyQuanAn.Models.DanhMuc>
+
+@{
+    ViewData["Title"] = "Quản lý danh mục";
+}
+
+<h1>Quản lý danh mục</h1>
+
+<form method="get">
+    <input type="text"
+           name="search"
+           value="@ViewBag.Search"
+           placeholder="Nhập tên danh mục..." />
+
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    <a asp-action="Create" class="btn btn-primary">
+        Thêm danh mục
+    </a>
+</form>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã danh mục</th>
+            <th>Tên danh mục</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaDM</td>
+
+                <td>@item.TenDM</td>
+
+                <td>@item.MoTa</td>
+
+                <td>
+                    @(item.TrangThai ? "Hoạt động" : "Ngừng hoạt động")
+                </td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.MaDM"
+                       class="btn btn-warning btn-sm">
+                        Sửa
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.MaDM"
+                       class="btn btn-danger btn-sm">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

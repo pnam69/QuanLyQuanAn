@@ -1,0 +1,75 @@
+﻿@model QuanLyQuanAn.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Xóa nhân viên";
+}
+
+<h1>Xóa nhân viên</h1>
+
+<h3>Bạn có chắc muốn xóa nhân viên này?</h3>
+
+<div>
+
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            Mã nhân viên
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.MaNV
+        </dd>
+
+        <dt class="col-sm-3">
+            Họ tên
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.HoTen
+        </dd>
+
+        <dt class="col-sm-3">
+            Số điện thoại
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.SDT
+        </dd>
+
+        <dt class="col-sm-3">
+            Tài khoản
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.TaiKhoan
+        </dd>
+
+        <dt class="col-sm-3">
+            Vai trò
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.VaiTro
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete"
+          method="post">
+
+        <input type="hidden"
+               asp-for="MaNV" />
+
+        <button type="submit"
+                class="btn btn-danger">
+            Xóa
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Hủy
+        </a>
+
+    </form>
+
+</div>

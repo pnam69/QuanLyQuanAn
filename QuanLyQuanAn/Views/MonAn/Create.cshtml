@@ -1,0 +1,79 @@
+﻿@model QuanLyQuanAn.Models.MonAn
+
+@{
+    ViewData["Title"] = "Thêm món ăn";
+}
+
+<h1>Thêm món ăn</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label asp-for="TenMon" class="form-label"></label>
+
+        <input asp-for="TenMon"
+               class="form-control" />
+
+        <span asp-validation-for="TenMon"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MaDM" class="form-label">
+            Danh mục
+        </label>
+
+        <select asp-for="MaDM"
+                asp-items="ViewBag.MaDM"
+                class="form-select">
+
+            <option value="">
+                -- Chọn danh mục --
+            </option>
+
+        </select>
+
+        <span asp-validation-for="MaDM"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DonGia" class="form-label"></label>
+
+        <input asp-for="DonGia"
+               type="number"
+               class="form-control" />
+
+        <span asp-validation-for="DonGia"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MoTa" class="form-label"></label>
+
+        <textarea asp-for="MoTa"
+                  class="form-control"></textarea>
+
+        <span asp-validation-for="MoTa"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="TrangThai" />
+
+        <label asp-for="TrangThai">
+            Hoạt động
+        </label>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Thêm
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

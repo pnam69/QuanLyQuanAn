@@ -1,0 +1,123 @@
+﻿@model QuanLyQuanAn.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Sửa nhân viên";
+}
+
+<h1>Sửa nhân viên</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden"
+           asp-for="MaNV" />
+
+    <div class="mb-3">
+        <label asp-for="HoTen"
+               class="form-label">
+        </label>
+
+        <input asp-for="HoTen"
+               class="form-control" />
+
+        <span asp-validation-for="HoTen"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SDT"
+               class="form-label">
+        </label>
+
+        <input asp-for="SDT"
+               class="form-control" />
+
+        <span asp-validation-for="SDT"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email"
+               class="form-label">
+        </label>
+
+        <input asp-for="Email"
+               class="form-control" />
+
+        <span asp-validation-for="Email"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TaiKhoan"
+               class="form-label">
+        </label>
+
+        <input asp-for="TaiKhoan"
+               class="form-control" />
+
+        <span asp-validation-for="TaiKhoan"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MatKhau"
+               class="form-label">
+        </label>
+
+        <input asp-for="MatKhau"
+               type="password"
+               class="form-control" />
+
+        <span asp-validation-for="MatKhau"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VaiTro"
+               class="form-label">
+        </label>
+
+        <select asp-for="VaiTro"
+                class="form-select">
+
+            <option value="Nhân viên">
+                Nhân viên
+            </option>
+
+            <option value="Admin">
+                Admin
+            </option>
+
+        </select>
+
+        <span asp-validation-for="VaiTro"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+
+        <input asp-for="TrangThai" />
+
+        <label asp-for="TrangThai">
+            Hoạt động
+        </label>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Lưu
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

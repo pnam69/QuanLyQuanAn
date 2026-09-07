@@ -1,0 +1,67 @@
+﻿@model QuanLyQuanAn.Models.Ban
+
+@{
+    ViewData["Title"] = "Xóa bàn";
+}
+
+<h1>Xóa bàn</h1>
+
+<h3>Bạn có chắc muốn xóa bàn này?</h3>
+
+<div>
+
+    <dl class="row">
+
+        <dt class="col-sm-3">
+            Mã bàn
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.MaBan
+        </dd>
+
+        <dt class="col-sm-3">
+            Số bàn
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.SoBan
+        </dd>
+
+        <dt class="col-sm-3">
+            Số chỗ
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.SoCho
+        </dd>
+
+        <dt class="col-sm-3">
+            Trạng thái
+        </dt>
+
+        <dd class="col-sm-9">
+            @Model.TrangThai
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete"
+          method="post">
+
+        <input type="hidden"
+               asp-for="MaBan" />
+
+        <button type="submit"
+                class="btn btn-danger">
+            Xóa
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Hủy
+        </a>
+
+    </form>
+
+</div>

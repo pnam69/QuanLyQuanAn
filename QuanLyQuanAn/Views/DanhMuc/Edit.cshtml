@@ -1,0 +1,48 @@
+﻿@model QuanLyQuanAn.Models.DanhMuc
+
+@{
+    ViewData["Title"] = "Sửa danh mục";
+}
+
+<h1>Sửa danh mục</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="MaDM" />
+
+    <div class="mb-3">
+        <label asp-for="TenDM" class="form-label"></label>
+
+        <input asp-for="TenDM" class="form-control" />
+
+        <span asp-validation-for="TenDM"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MoTa" class="form-label"></label>
+
+        <textarea asp-for="MoTa"
+                  class="form-control"></textarea>
+
+        <span asp-validation-for="MoTa"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TrangThai" class="form-label"></label>
+
+        <input asp-for="TrangThai" />
+
+        <span>Hoạt động</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Lưu
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>
