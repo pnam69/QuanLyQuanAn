@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyQuanAn.Data;
 using QuanLyQuanAn.Models;
+using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
+    [RoleAuthorize("Quản trị viên")]
     public class DanhMucController : Controller
     {
         private readonly AppDbContext _context;

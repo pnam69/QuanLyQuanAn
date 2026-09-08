@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán";
+
+    var donHang =
+        ViewBag.DonHang as QuanLyQuanAn.Models.DonHang;
+}
+
+<h1>Thanh toán</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        <h4>Thông tin đơn hàng</h4>
+
+        <p>
+            <strong>Mã đơn:</strong>
+            #@donHang?.MaDon
+        </p>
+
+        <p>
+            <strong>Bàn:</strong>
+            Bàn @donHang?.Ban?.SoBan
+        </p>
+
+        <p>
+            <strong>Tổng tiền:</strong>
+            <span class="fw-bold">
+                @donHang?.TongTien.ToString("N0") đ
+            </span>
+        </p>
+
+    </div>
+</div>
+
+<form asp-action="Create" method="post">
+
+    <input type="hidden"
+           name="MaDon"
+           value="@donHang?.MaDon" />
+
+    <div class="mb-3">
+        <label class="form-label">
+            Phương thức thanh toán
+        </label>
+
+        <select name="PhuongThuc"
+                class="form-select"
+                required>
+
+            <option value="">
+                -- Chọn phương thức --
+            </option>
+
+            <option value="Tiền mặt">
+                Tiền mặt
+            </option>
+
+            <option value="Chuyển khoản">
+                Chuyển khoản
+            </option>
+
+        </select>
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Xác nhận thanh toán
+    </button>
+
+    <a asp-controller="DonHang"
+       asp-action="Details"
+       asp-route-id="@donHang?.MaDon"
+       class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

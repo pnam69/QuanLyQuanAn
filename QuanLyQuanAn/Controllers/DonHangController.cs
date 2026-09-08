@@ -114,6 +114,7 @@ namespace QuanLyQuanAn.Controllers
             _context.DonHangs.Add(donHang);
 
             // Khi có đơn, bàn chuyển sang đang phục vụ
+
             ban.TrangThai = "Đang phục vụ";
 
             await _context.SaveChangesAsync();

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuanLyQuanAn.Data;
 using QuanLyQuanAn.Models;
+using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
+    [RoleAuthorize("Quản trị viên, Nhân viên")]
     public class MonAnController : Controller
     {
         private readonly AppDbContext _context;

@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card mt-5">
+            <div class="card-body">
+
+                <h2 class="text-center mb-4">
+                    Đăng nhập
+                </h2>
+
+                <form asp-action="Login"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Tài khoản
+                        </label>
+
+                        <input type="text"
+                               name="TaiKhoan"
+                               class="form-control"
+                               autocomplete="username" />
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("TaiKhoan")
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Mật khẩu
+                        </label>
+
+                        <input type="password"
+                               name="MatKhau"
+                               class="form-control"
+                               autocomplete="current-password" />
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("MatKhau")
+                        </span>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+                        Đăng nhập
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

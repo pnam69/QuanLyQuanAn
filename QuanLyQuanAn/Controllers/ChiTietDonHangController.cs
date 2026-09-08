@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyQuanAn.Data;
 using QuanLyQuanAn.Models;
+using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
+    [RoleAuthorize("Quản trị viên, Nhân viên")]
     public class ChiTietDonHangController : Controller
     {
         private readonly AppDbContext _context;
