@@ -38,7 +38,7 @@ namespace QuanLyQuanAn.Models
         public string VaiTro { get; set; } = "Nhân viên";
 
         [Display(Name = "Trạng thái")]
-        public bool TrangThai { get; set; } = true;
+        public string TrangThai { get; set; } = "Hoạt động";
 
         public ICollection<DonHang> DonHangs { get; set; }
             = new List<DonHang>();

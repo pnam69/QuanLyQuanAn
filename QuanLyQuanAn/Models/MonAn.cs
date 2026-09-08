@@ -25,7 +25,7 @@ namespace QuanLyQuanAn.Models
         public string? MoTa { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public bool TrangThai { get; set; }
+        public string TrangThai { get; set; } = "Còn món";
 
         public DanhMuc? DanhMuc { get; set; }
     }

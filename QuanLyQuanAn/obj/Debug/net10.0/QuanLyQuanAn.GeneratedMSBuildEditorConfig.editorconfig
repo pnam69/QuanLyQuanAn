@@ -47,6 +47,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFuXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/ChiTietDonHang/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpVGlldERvbkhhbmdcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/ChiTietDonHang/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpVGlldERvbkhhbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DanhMuc/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaE11Y1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -61,6 +69,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DanhMuc/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaE11Y1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/Home/Index.cshtml]
@@ -81,6 +105,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/MonAn/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uQW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/MonAn/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uQW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/NhanVien/Create.cshtml]

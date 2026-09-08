@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Tạo đơn hàng";
+
+    var bans = ViewBag.Bans as List<QuanLyQuanAn.Models.Ban>;
+    var nhanViens = ViewBag.NhanViens as List<QuanLyQuanAn.Models.NhanVien>;
+}
+
+<h1>Tạo đơn hàng</h1>
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label class="form-label">Bàn</label>
+
+        <select name="MaBan" class="form-select" required>
+            <option value="">-- Chọn bàn --</option>
+
+            @foreach (var ban in bans ?? new())
+            {
+                <option value="@ban.MaBan">
+                    Bàn @ban.SoBan - @ban.SoCho chỗ
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nhân viên</label>
+
+        <select name="MaNV" class="form-select" required>
+            <option value="">-- Chọn nhân viên --</option>
+
+            @foreach (var nv in nhanViens ?? new())
+            {
+                <option value="@nv.MaNV">
+                    @nv.HoTen
+                </option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Tạo đơn
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

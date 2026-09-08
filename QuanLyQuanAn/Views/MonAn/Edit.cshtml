@@ -8,7 +8,11 @@
 
 <form asp-action="Edit" method="post">
 
-    <input type="hidden" asp-for="MaMon" />
+    <input type="hidden"
+           asp-for="MaMon" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
 
     <div class="mb-3">
         <label asp-for="TenMon" class="form-label"></label>
@@ -28,6 +32,11 @@
         <select asp-for="MaDM"
                 asp-items="ViewBag.MaDM"
                 class="form-select">
+
+            <option value="">
+                -- Chọn danh mục --
+            </option>
+
         </select>
 
         <span asp-validation-for="MaDM"
@@ -38,8 +47,10 @@
         <label asp-for="DonGia" class="form-label"></label>
 
         <input asp-for="DonGia"
+               class="form-control"
                type="number"
-               class="form-control" />
+               min="0"
+               step="1000" />
 
         <span asp-validation-for="DonGia"
               class="text-danger"></span>
@@ -49,23 +60,38 @@
         <label asp-for="MoTa" class="form-label"></label>
 
         <textarea asp-for="MoTa"
-                  class="form-control"></textarea>
+                  class="form-control"
+                  rows="3"></textarea>
 
         <span asp-validation-for="MoTa"
               class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <input asp-for="TrangThai" />
-
-        <label asp-for="TrangThai">
-            Hoạt động
+        <label asp-for="TrangThai" class="form-label">
+            Trạng thái
         </label>
+
+        <select asp-for="TrangThai"
+                class="form-select">
+
+            <option value="Đang bán">
+                Đang bán
+            </option>
+
+            <option value="Ngừng bán">
+                Ngừng bán
+            </option>
+
+        </select>
+
+        <span asp-validation-for="TrangThai"
+              class="text-danger"></span>
     </div>
 
     <button type="submit"
             class="btn btn-primary">
-        Lưu
+        Lưu thay đổi
     </button>
 
     <a asp-action="Index"
@@ -74,3 +100,9 @@
     </a>
 
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

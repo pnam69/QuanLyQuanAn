@@ -230,3 +230,4 @@ E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\bin\Debug\net10.0\runtimes\win-x64\native\
 E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\bin\Debug\net10.0\runtimes\win-x86\native\msalruntime_x86.dll
 E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\QuanLyQuanAn.csproj.AssemblyReference.cache
 E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\QuanLyQu.B3A73899.Up2Date
+E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\QuanLyQuanAn.sourcelink.json

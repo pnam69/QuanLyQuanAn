@@ -38,7 +38,7 @@ namespace QuanLyQuanAn.Controllers
         {
             ViewBag.MaDM = new SelectList(
                 await _context.DanhMucs
-                    .Where(x => x.TrangThai)
+                    .Where(x => x.TrangThai == "Hoạt động")
                     .ToListAsync(),
                 "MaDM",
                 "TenDM");
@@ -54,7 +54,7 @@ namespace QuanLyQuanAn.Controllers
             {
                 ViewBag.MaDM = new SelectList(
                     await _context.DanhMucs
-                        .Where(x => x.TrangThai)
+                        .Where(x => x.TrangThai == "Hoạt động")
                         .ToListAsync(),
                     "MaDM",
                     "TenDM",
@@ -86,7 +86,7 @@ namespace QuanLyQuanAn.Controllers
 
             ViewBag.MaDM = new SelectList(
                 await _context.DanhMucs
-                    .Where(x => x.TrangThai)
+                    .Where(x => x.TrangThai == "Hoạt động")
                     .ToListAsync(),
                 "MaDM",
                 "TenDM",
@@ -108,7 +108,7 @@ namespace QuanLyQuanAn.Controllers
             {
                 ViewBag.MaDM = new SelectList(
                     await _context.DanhMucs
-                        .Where(x => x.TrangThai)
+                        .Where(x => x.TrangThai == "Hoạt động")
                         .ToListAsync(),
                     "MaDM",
                     "TenDM",

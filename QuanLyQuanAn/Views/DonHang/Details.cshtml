@@ -1,0 +1,130 @@
+﻿@model QuanLyQuanAn.Models.DonHang
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<h1>Chi tiết đơn hàng #@Model.MaDon</h1>
+
+<div class="mb-4">
+    <p>
+        <strong>Bàn:</strong>
+        Bàn @Model.Ban?.SoBan
+    </p>
+
+    <p>
+        <strong>Nhân viên:</strong>
+        @Model.NhanVien?.HoTen
+    </p>
+
+    <p>
+        <strong>Ngày lập:</strong>
+        @Model.NgayLap.ToString("dd/MM/yyyy HH:mm")
+    </p>
+
+    <p>
+        <strong>Trạng thái:</strong>
+        @Model.TrangThai
+    </p>
+</div>
+
+<h3>Các món</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Món ăn</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.ChiTietDonHangs != null &&
+             Model.ChiTietDonHangs.Any())
+        {
+            foreach (var item in Model.ChiTietDonHangs)
+            {
+                <tr>
+                    <td>@item.MonAn?.TenMon</td>
+
+                    <td>
+                        @item.DonGia.ToString("N0") đ
+                    </td>
+
+                    <td>
+                        @item.SoLuong
+                    </td>
+
+                    <td>
+                        @item.ThanhTien.ToString("N0") đ
+                    </td>
+
+                    <td>
+                        @if (Model.TrangThai != "Đã thanh toán")
+                        {
+                            <form asp-controller="ChiTietDonHang"
+                                  asp-action="Delete"
+                                  method="post"
+                                  style="display:inline"
+                                  onsubmit="return confirm('Bạn có chắc muốn xóa món này?');">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@item.MaChiTiet" />
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+                                    Xóa
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">
+                    Chưa có món ăn nào.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-end">
+    <h3>
+        Tổng tiền:
+        @Model.TongTien.ToString("N0") đ
+    </h3>
+</div>
+
+<div class="mt-3">
+
+    <a asp-controller="ChiTietDonHang"
+       asp-action="Create"
+       asp-route-maDon="@Model.MaDon"
+       class="btn btn-primary">
+        Thêm món
+    </a>
+
+    @if (Model.TrangThai != "Đã thanh toán")
+    {
+        <a asp-controller="ThanhToan"
+           asp-action="Create"
+           asp-route-maDon="@Model.MaDon"
+           class="btn btn-success">
+            Thanh toán
+        </a>
+    }
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</div>

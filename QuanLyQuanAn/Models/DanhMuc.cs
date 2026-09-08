@@ -17,7 +17,7 @@ namespace QuanLyQuanAn.Models
         public string? MoTa { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public bool TrangThai { get; set; }
+        public string TrangThai { get; set; } = "Hoạt động";
 
         public ICollection<MonAn> MonAns { get; set; } = new List<MonAn>();
     }

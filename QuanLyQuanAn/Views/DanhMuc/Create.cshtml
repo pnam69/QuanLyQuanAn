@@ -29,10 +29,16 @@
     </div>
 
     <div class="mb-3">
-        <label>
-            <input asp-for="TrangThai" />
-            Hoạt động
+        <label asp-for="TrangThai" class="form-label">
+            Trạng thái
         </label>
+
+        <select asp-for="TrangThai" class="form-select">
+            <option value="Hoạt động">Hoạt động</option>
+            <option value="Ngừng hoạt động">Ngừng hoạt động</option>
+        </select>
+
+        <span asp-validation-for="TrangThai" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">

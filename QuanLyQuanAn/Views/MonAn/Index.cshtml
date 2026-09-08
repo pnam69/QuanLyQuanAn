@@ -1,0 +1,99 @@
+﻿@model IEnumerable<QuanLyQuanAn.Models.MonAn>
+
+@{
+    ViewData["Title"] = "Quản lý món ăn";
+}
+
+<h1>Quản lý món ăn</h1>
+
+<div class="row mb-3">
+    <div class="col-md-8">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       class="form-control"
+                       placeholder="Tìm kiếm món ăn..." />
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Tìm kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4 text-end">
+        <a asp-action="Create"
+           class="btn btn-success">
+            Thêm món ăn
+        </a>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã món</th>
+            <th>Tên món</th>
+            <th>Danh mục</th>
+            <th>Đơn giá</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7" class="text-center">
+                    Không tìm thấy món ăn.
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaMon</td>
+
+                    <td>@item.TenMon</td>
+
+                    <td>
+                        @item.DanhMuc?.TenDM
+                    </td>
+
+                    <td>
+                        @item.DonGia.ToString("N0") đ
+                    </td>
+
+                    <td>
+                        @item.MoTa
+                    </td>
+
+                    <td>
+                        @item.TrangThai
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-id="@item.MaMon"
+                           class="btn btn-warning btn-sm">
+                            Sửa
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.MaMon"
+                           class="btn btn-danger btn-sm">
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

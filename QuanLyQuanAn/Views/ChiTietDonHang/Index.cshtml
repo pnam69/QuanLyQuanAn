@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Thêm món";
+
+    var donHang = ViewBag.DonHang
+        as QuanLyQuanAn.Models.DonHang;
+
+    var monAns = ViewBag.MonAns
+        as List<QuanLyQuanAn.Models.MonAn>
+        ?? new List<QuanLyQuanAn.Models.MonAn>();
+}
+
+<h1>Thêm món vào đơn hàng</h1>
+
+<div class="mb-3">
+    <strong>Đơn hàng:</strong>
+    #@donHang?.MaDon
+</div>
+
+<div class="mb-3">
+    <strong>Bàn:</strong>
+    Bàn @donHang?.Ban?.SoBan
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<form asp-action="Create" method="post">
+
+    <input type="hidden"
+           name="MaDon"
+           value="@donHang?.MaDon" />
+
+    <div class="mb-3">
+        <label class="form-label">
+            Món ăn
+        </label>
+
+        <select name="MaMon"
+                class="form-select"
+                required>
+
+            <option value="">
+                -- Chọn món ăn --
+            </option>
+
+            @foreach (var mon in monAns)
+            {
+                <option value="@mon.MaMon">
+                    @mon.TenMon -
+                    @mon.DonGia.ToString("N0") đ
+                </option>
+            }
+
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Số lượng
+        </label>
+
+        <input type="number"
+               name="SoLuong"
+               class="form-control"
+               value="1"
+               min="1"
+               required />
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Thêm món
+    </button>
+
+    <a asp-controller="DonHang"
+       asp-action="Details"
+       asp-route-id="@donHang?.MaDon"
+       class="btn btn-secondary">
+        Quay lại đơn hàng
+    </a>
+
+</form>

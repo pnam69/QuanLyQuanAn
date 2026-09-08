@@ -1,0 +1,68 @@
+﻿@model IEnumerable<QuanLyQuanAn.Models.DonHang>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+
+<h1>Quản lý đơn hàng</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo đơn hàng</a>
+</p>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Bàn</th>
+            <th>Nhân viên</th>
+            <th>Ngày lập</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaDon</td>
+                <td>Bàn @item.Ban?.SoBan</td>
+                <td>@item.NhanVien?.HoTen</td>
+                <td>@item.NgayLap.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.TongTien.ToString("N0") đ</td>
+                <td>@item.TrangThai</td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.MaDon"
+                       class="btn btn-info btn-sm">
+                        Chi tiết
+                    </a>
+
+                    @if (item.TrangThai != "Đã thanh toán")
+                    {
+                        <form asp-action="Delete"
+                              asp-route-id="@item.MaDon"
+                              method="post"
+                              style="display:inline"
+                              onsubmit="return confirm('Bạn có chắc muốn xóa đơn này?');">
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+                                Xóa
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
