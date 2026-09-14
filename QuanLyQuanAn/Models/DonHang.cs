@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyQuanAn.Models
 {
+    [Index(nameof(MaDon), IsUnique = true)]
     public class DonHang
     {
         [Key]

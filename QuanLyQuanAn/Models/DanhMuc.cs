@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyQuanAn.Models
 {
+    [Index(nameof(MaDM), IsUnique = true)]
     public class DanhMuc
     {
         [Key]

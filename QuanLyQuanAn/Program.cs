@@ -2,7 +2,7 @@ using QuanLyQuanAn.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();

@@ -41,6 +41,14 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DanhMuc danhMuc)
         {
+
+            if (await _context.DanhMucs.AnyAsync(x => x.MaDM == danhMuc.MaDM))
+            {
+                ModelState.AddModelError(
+                    "MaDM",
+                    "Danh mục này đã tồn tại.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(danhMuc);

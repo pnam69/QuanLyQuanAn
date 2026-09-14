@@ -44,6 +44,12 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ban ban)
         {
+            if (await _context.Bans.AnyAsync(x => x.SoBan == ban.SoBan))
+            {
+                ModelState.AddModelError(
+                    "SoBan",
+                    "Số bàn này đã tồn tại.");
+            }
             if (!ModelState.IsValid)
             {
                 return View(ban);
@@ -78,6 +84,12 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Ban ban)
         {
+            if (await _context.Bans.AnyAsync(x => x.SoBan == ban.SoBan && x.MaBan != ban.MaBan))
+            {
+                ModelState.AddModelError(
+                    "SoBan",
+                    "Số bàn này đã tồn tại.");
+            }
             if (id != ban.MaBan)
             {
                 return NotFound();

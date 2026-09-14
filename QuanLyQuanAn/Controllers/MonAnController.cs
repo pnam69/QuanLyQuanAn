@@ -7,7 +7,7 @@ using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên, Nhân viên")]
+    [RoleAuthorize("Quản trị viên", "Nhân viên")]
     public class MonAnController : Controller
     {
         private readonly AppDbContext _context;
@@ -52,6 +52,12 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MonAn monAn)
         {
+            if (await _context.MonAns.AnyAsync(x => x.MaMon == monAn.MaMon))
+            {
+                ModelState.AddModelError(
+                    "MaMon",
+                    "Món ăn này đã tồn tại.");
+            }
             if (!ModelState.IsValid)
             {
                 ViewBag.MaDM = new SelectList(

@@ -12,23 +12,13 @@ namespace QuanLyQuanAn.Controllers
         {
             _context = context;
         }
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
-        // GET: Account/Login
+
         [HttpGet]
         public IActionResult Login()
         {
-            if (HttpContext.Session.GetInt32("MaNV") != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View();
         }
 
-        // POST: Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(
@@ -89,19 +79,21 @@ namespace QuanLyQuanAn.Controllers
                 "VaiTro",
                 nhanVien.VaiTro);
 
-            return RedirectToAction(
-                "Index",
-                "Home");
+            return RedirectToAction("Index", "Home");
         }
 
-        // GET: Account/Logout
         [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
 
-            return RedirectToAction(
-                nameof(Login));
+            return RedirectToAction(nameof(Login));
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

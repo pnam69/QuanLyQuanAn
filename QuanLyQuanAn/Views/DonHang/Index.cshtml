@@ -16,7 +16,25 @@
         @TempData["Error"]
     </div>
 }
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text"
+               name="search"
+               value="@ViewBag.Search"
+               class="form-control"
+               placeholder="Tìm mã đơn, số bàn, nhân viên hoặc trạng thái..." />
 
+        <button type="submit"
+                class="btn btn-primary">
+            Tìm kiếm
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Xóa tìm kiếm
+        </a>
+    </div>
+</form>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
