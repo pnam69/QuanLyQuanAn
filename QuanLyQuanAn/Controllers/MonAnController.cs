@@ -70,7 +70,18 @@ namespace QuanLyQuanAn.Controllers
 
                 return View(monAn);
             }
-
+            if (monAn.DonGia < 0)
+            {
+                ModelState.AddModelError(
+                    "DonGia",
+                    "Đơn giá không được nhỏ hơn 0.");
+            }
+            if (await _context.MonAns.AnyAsync(x => x.TenMon == monAn.TenMon))
+            {
+                ModelState.AddModelError(
+                    "TenMon",
+                    "Tên món ăn này đã tồn tại.");
+            }
             _context.MonAns.Add(monAn);
 
             await _context.SaveChangesAsync();
@@ -125,6 +136,22 @@ namespace QuanLyQuanAn.Controllers
                 return View(monAn);
             }
 
+            if (string.IsNullOrWhiteSpace(monAn.TenMon))
+            {
+                ModelState.AddModelError(
+                    "TenMon",
+                    "Vui lòng nhập tên món ăn.");
+            }
+
+            if (await _context.MonAns.AnyAsync(x =>
+    x.TenMon == monAn.TenMon &&
+    x.MaMon != monAn.MaMon))
+            {
+                ModelState.AddModelError(
+                    "TenMon",
+                    "Tên món ăn này đã tồn tại.");
+            }
+
             try
             {
                 _context.Update(monAn);
@@ -172,14 +199,27 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var monAn = await _context.MonAns.FindAsync(id);
+            var monAn = await _context.MonAns
+                .FirstOrDefaultAsync(x => x.MaMon == id);
 
-            if (monAn != null)
+            if (monAn == null)
+                return NotFound();
+
+            bool dangCoDonHang = await _context.ChiTietDonHangs
+                .AnyAsync(x => x.MaMon == id);
+
+            if (dangCoDonHang)
             {
-                _context.MonAns.Remove(monAn);
+                TempData["Error"] =
+                    "Không thể xóa món ăn này vì món đã có trong đơn hàng.";
 
-                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+
+            _context.MonAns.Remove(monAn);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Xóa món ăn thành công.";
 
             return RedirectToAction(nameof(Index));
         }

@@ -89,7 +89,7 @@ namespace QuanLyQuanAn.Controllers
             if (donHang.TongTien <= 0)
             {
                 TempData["Error"] =
-                    "Đơn hàng chưa có món ăn.";
+                    "Đơn hàng có tông tiền bằng 0, không thể thanh toán.";
 
                 return RedirectToAction(
                     "Details",
@@ -105,6 +105,18 @@ namespace QuanLyQuanAn.Controllers
                 return RedirectToAction(
                     nameof(Create),
                     new { maDon = MaDon });
+            }
+
+            if (PhuongThuc != "Tiền mặt" &&
+        PhuongThuc != "Chuyển khoản")
+            {
+                TempData["Error"] =
+                    "Phương thức thanh toán không hợp lệ.";
+
+                return RedirectToAction(
+                    "Details",
+                    "DonHang",
+                    new { id = MaDon });
             }
 
             var thanhToan = new ThanhToan

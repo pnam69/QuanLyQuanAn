@@ -74,6 +74,15 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
+            if (await _context.DanhMucs.AnyAsync(x =>
+    x.TenDM == danhMuc.TenDM &&
+    x.MaDM != danhMuc.MaDM))
+            {
+                ModelState.AddModelError(
+                    "TenDM",
+                    "Tên danh mục này đã tồn tại.");
+            }
+
             return View(danhMuc);
         }
 
@@ -136,13 +145,27 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var danhMuc = await _context.DanhMucs.FindAsync(id);
+            var danhMuc = await _context.DanhMucs
+                .FirstOrDefaultAsync(x => x.MaDM == id);
 
-            if (danhMuc != null)
+            if (danhMuc == null)
+                return NotFound();
+
+            bool dangCoMonAn = await _context.MonAns
+                .AnyAsync(x => x.MaDM == id);
+
+            if (dangCoMonAn)
             {
-                _context.DanhMucs.Remove(danhMuc);
-                await _context.SaveChangesAsync();
+                TempData["Error"] =
+                    "Không thể xóa danh mục này vì vẫn còn món ăn thuộc danh mục.";
+
+                return RedirectToAction(nameof(Index));
             }
+
+            _context.DanhMucs.Remove(danhMuc);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Xóa danh mục thành công.";
 
             return RedirectToAction(nameof(Index));
         }

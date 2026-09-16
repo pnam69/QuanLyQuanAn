@@ -79,12 +79,25 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
+
             var nhanVien = await _context.NhanViens
                 .FindAsync(id);
 
             if (nhanVien == null)
             {
                 return NotFound();
+            }
+            if (await _context.NhanViens.AnyAsync(x => x.TaiKhoan == nhanVien.TaiKhoan && x.MaNV != nhanVien.MaNV))
+            {
+                ModelState.AddModelError(
+                    "TaiKhoan",
+                    "Tài khoản này đã tồn tại.");
+            }
+            if (string.IsNullOrWhiteSpace(nhanVien.HoTen))
+            {
+                ModelState.AddModelError(
+                    "HoTen",
+                    "Vui lòng nhập họ tên.");
             }
 
             return View(nhanVien);
@@ -118,6 +131,12 @@ namespace QuanLyQuanAn.Controllers
                     "Tài khoản đã tồn tại.");
 
                 return View(nhanVien);
+            }
+            if (string.IsNullOrWhiteSpace(nhanVien.HoTen))
+            {
+                ModelState.AddModelError(
+                    "HoTen",
+                    "Vui lòng nhập họ tên.");
             }
 
             try
@@ -163,14 +182,36 @@ namespace QuanLyQuanAn.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var nhanVien = await _context.NhanViens
-                .FindAsync(id);
+                .FirstOrDefaultAsync(x => x.MaNV == id);
 
-            if (nhanVien != null)
+            if (nhanVien == null)
+                return NotFound();
+
+            var currentMaNV = HttpContext.Session.GetInt32("MaNV");
+
+            if (currentMaNV == id)
             {
-                _context.NhanViens.Remove(nhanVien);
+                TempData["Error"] =
+                    "Không thể xóa tài khoản nhân viên đang đăng nhập.";
 
-                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+
+            bool dangCoDonHang = await _context.DonHangs
+                .AnyAsync(x => x.MaNV == id);
+
+            if (dangCoDonHang)
+            {
+                TempData["Error"] =
+                    "Không thể xóa nhân viên này vì đã có đơn hàng liên quan.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.NhanViens.Remove(nhanVien);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Xóa nhân viên thành công.";
 
             return RedirectToAction(nameof(Index));
         }

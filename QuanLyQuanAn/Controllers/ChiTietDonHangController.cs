@@ -6,7 +6,7 @@ using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên, Nhân viên")]
+    [RoleAuthorize("Quản trị viên", "Nhân viên")]
     public class ChiTietDonHangController : Controller
     {
         private readonly AppDbContext _context;
@@ -28,6 +28,7 @@ namespace QuanLyQuanAn.Controllers
             {
                 return NotFound();
             }
+
 
             if (donHang.TrangThai == "Đã thanh toán")
             {
@@ -74,18 +75,9 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
-            if (donHang.TrangThai == "Đã thanh toán")
-            {
-                TempData["Error"] = "Đơn hàng đã thanh toán.";
-
-                return RedirectToAction(
-                    "Details",
-                    "DonHang",
-                    new { id = MaDon });
-            }
 
             var monAn = await _context.MonAns
-                .FirstOrDefaultAsync(m => m.MaMon == MaMon);
+                .FirstOrDefaultAsync(m => m.MaMon == MaMon && m.TrangThai == "Đang bán");
 
             if (monAn == null)
             {
@@ -157,22 +149,20 @@ namespace QuanLyQuanAn.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var chiTiet = await _context.ChiTietDonHangs
+                .Include(x => x.DonHang)
                 .FirstOrDefaultAsync(ct => ct.MaChiTiet == id);
 
             if (chiTiet == null)
             {
                 return NotFound();
             }
-
-            var maDon = chiTiet.MaDon;
-
-            var donHang = await _context.DonHangs
-                .FirstOrDefaultAsync(d => d.MaDon == maDon);
-
-            if (donHang == null)
+            if (chiTiet.DonHang == null)
             {
                 return NotFound();
             }
+
+            var donHang = chiTiet.DonHang;
+            var maDon = chiTiet.MaDon;
 
             if (donHang.TrangThai == "Đã thanh toán")
             {
@@ -186,8 +176,6 @@ namespace QuanLyQuanAn.Controllers
             }
 
             _context.ChiTietDonHangs.Remove(chiTiet);
-
-            await _context.SaveChangesAsync();
 
             // Cập nhật lại tổng tiền
             donHang.TongTien = await _context.ChiTietDonHangs

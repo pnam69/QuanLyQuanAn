@@ -196,7 +196,7 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
-            if (donHang.ThanhToan != null)
+            if (donHang.TrangThai == "Đã thanh toán" || donHang.ThanhToan != null)
             {
                 TempData["Error"] =
                     "Không thể xóa đơn hàng đã thanh toán.";

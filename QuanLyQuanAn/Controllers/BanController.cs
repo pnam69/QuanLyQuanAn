@@ -54,7 +54,12 @@ namespace QuanLyQuanAn.Controllers
             {
                 return View(ban);
             }
-
+            if (ban.SoCho <= 0)
+            {
+                ModelState.AddModelError(
+                    "SoCho",
+                    "Số chỗ phải lớn hơn 0.");
+            }
             _context.Bans.Add(ban);
 
             await _context.SaveChangesAsync();
@@ -76,7 +81,12 @@ namespace QuanLyQuanAn.Controllers
             {
                 return NotFound();
             }
-
+            if (ban.SoCho <= 0)
+            {
+                ModelState.AddModelError(
+                    "SoCho",
+                    "Số chỗ phải lớn hơn 0.");
+            }
             return View(ban);
         }
 
@@ -142,14 +152,34 @@ namespace QuanLyQuanAn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ban = await _context.Bans.FindAsync(id);
+            var ban = await _context.Bans
+                .FirstOrDefaultAsync(x => x.MaBan == id);
 
-            if (ban != null)
+            if (ban == null)
+                return NotFound();
+
+            if (ban.TrangThai == "Đang phục vụ")
             {
-                _context.Bans.Remove(ban);
-
-                await _context.SaveChangesAsync();
+                TempData["Error"] =
+                    "Không thể xóa bàn này vì đang phục vụ khách.";
+                return RedirectToAction(nameof(Index));
             }
+
+            bool dangCoDonHang = await _context.DonHangs
+                .AnyAsync(x => x.MaBan == id);
+
+            if (dangCoDonHang)
+            {
+                TempData["Error"] =
+                    "Không thể xóa bàn này vì đã có đơn hàng liên quan.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Bans.Remove(ban);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Xóa bàn thành công.";
 
             return RedirectToAction(nameof(Index));
         }
