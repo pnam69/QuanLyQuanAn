@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ffhun\\source\\repos\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj": {}
+    "E:\\1_PRN211\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ffhun\\source\\repos\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj": {
+    "E:\\1_PRN211\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ffhun\\source\\repos\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj",
+        "projectUniqueName": "E:\\1_PRN211\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj",
         "projectName": "QuanLyQuanAn",
-        "projectPath": "C:\\Users\\ffhun\\source\\repos\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj",
-        "packagesPath": "C:\\Users\\ffhun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ffhun\\source\\repos\\QuanLyQuanAn\\QuanLyQuanAn\\obj\\",
+        "projectPath": "E:\\1_PRN211\\QuanLyQuanAn\\QuanLyQuanAn\\QuanLyQuanAn.csproj",
+        "packagesPath": "C:\\Users\\ThinkPad\\.nuget\\packages\\",
+        "outputPath": "E:\\1_PRN211\\QuanLyQuanAn\\QuanLyQuanAn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ffhun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ThinkPad\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
