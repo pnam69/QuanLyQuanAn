@@ -1,80 +1,100 @@
 ﻿@model QuanLyQuanAn.Models.Ban
 
 @{
-    ViewData["Title"] = "Sửa bàn";
+    ViewData["Title"] = "Sửa thông tin bàn";
 }
 
-<h1>Sửa bàn</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 rounded-lg">
+                
+                <!-- Tiêu đề Form -->
+                <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
+                            <!-- Icon Edit/Pencil -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">Cập Nhật Thông Tin Bàn</h4>
+                            <small class="text-muted">Chỉnh sửa thông số của bàn hiện tại</small>
+                        </div>
+                    </div>
+                </div>
 
-<form asp-action="Edit" method="post">
+                <div class="card-body p-4">
+                    <form asp-action="Edit" method="post">
+                        
+                        <!-- Trường ẩn chứa Mã Bàn để submit -->
+                        <input type="hidden" asp-for="MaBan" />
+                        
+                        <!-- Input: Số Bàn -->
+                        <div class="mb-4">
+                            <label asp-for="SoBan" class="form-label fw-semibold text-secondary small">SỐ/TÊN BÀN</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hash" viewBox="0 0 16 16">
+                                      <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.22-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.51.51 0 0 0-.523-.516.54.54 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.22.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.22.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z"/>
+                                    </svg>
+                                </span>
+                                <input asp-for="SoBan" class="form-control bg-light border-start-0" placeholder="VD: Bàn 01..." />
+                            </div>
+                            <span asp-validation-for="SoBan" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-    <input type="hidden"
-           asp-for="MaBan" />
+                        <!-- Input: Số Chỗ Ngồi -->
+                        <div class="mb-4">
+                            <label asp-for="SoCho" class="form-label fw-semibold text-secondary small">SỐ LƯỢNG CHỖ NGỒI</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                      <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                                    </svg>
+                                </span>
+                                <input asp-for="SoCho" type="number" min="1" class="form-control bg-light border-start-0" placeholder="Số ghế..." />
+                            </div>
+                            <span asp-validation-for="SoCho" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-    <div class="mb-3">
+                        <!-- Select: Trạng Thái -->
+                        <div class="mb-4">
+                            <label asp-for="TrangThai" class="form-label fw-semibold text-secondary small">TRẠNG THÁI HIỆN TẠI</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                      <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                                    </svg>
+                                </span>
+                                <select asp-for="TrangThai" class="form-select bg-light border-start-0">
+                                    <option value="Trống">Trống</option>
+                                    <option value="Đang phục vụ">Đang phục vụ</option>
+                                    <option value="Đã đặt">Đã đặt</option>
+                                </select>
+                            </div>
+                        </div>
 
-        <label asp-for="SoBan"
-               class="form-label">
-        </label>
+                        <hr class="text-muted my-4" />
 
-        <input asp-for="SoBan"
-               class="form-control" />
-
-        <span asp-validation-for="SoBan"
-              class="text-danger">
-        </span>
-
+                        <!-- Nút Điều Hướng & Submit -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
+                            <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle me-1 mb-1" viewBox="0 0 16 16">
+                                  <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                  <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                </svg>
+                                Lưu thay đổi
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-
-        <label asp-for="SoCho"
-               class="form-label">
-        </label>
-
-        <input asp-for="SoCho"
-               type="number"
-               class="form-control" />
-
-        <span asp-validation-for="SoCho"
-              class="text-danger">
-        </span>
-
-    </div>
-
-    <div class="mb-3">
-
-        <label asp-for="TrangThai"
-               class="form-label">
-        </label>
-
-        <select asp-for="TrangThai"
-                class="form-select">
-
-            <option value="Trống">
-                Trống
-            </option>
-
-            <option value="Đang phục vụ">
-                Đang phục vụ
-            </option>
-
-            <option value="Đã đặt">
-                Đã đặt
-            </option>
-
-        </select>
-
-    </div>
-
-    <button type="submit"
-            class="btn btn-primary">
-        Lưu
-    </button>
-
-    <a asp-action="Index"
-       class="btn btn-secondary">
-        Quay lại
-    </a>
-
-</form>
+</div>

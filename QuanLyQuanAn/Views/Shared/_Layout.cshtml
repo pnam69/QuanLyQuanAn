@@ -1,47 +1,84 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - QuanLyQuanAn</title>
+    <title>@ViewData["Title"] - Quản Lý Quán Ăn</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QuanLyQuanAn.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bg-light">
+    
+    <!-- Navbar Điều Hướng Hệ Thống -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuanLyQuanAn</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+            <div class="container-fluid px-4">
+                
+                <!-- Logo / Thương hiệu -->
+                <a class="navbar-brand fw-bold text-primary d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-shop me-2" viewBox="0 0 16 16">
+                        <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zM4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
+                    </svg>
+                    QUẢN LÝ QUÁN ĂN
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <!-- Danh mục Menu chính -->
+                <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark fw-medium px-2" asp-controller="Home" asp-action="Index">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark fw-medium px-2" asp-controller="DonHang" asp-action="Index">Đơn hàng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium px-2" asp-controller="MonAn" asp-action="Index">Thực đơn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium px-2" asp-controller="DanhMuc" asp-action="Index">Danh mục</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium px-2" asp-controller="Ban" asp-action="Index">Bàn ăn</a>
+                        </li>
+                    </ul>
+
+                    <!-- Khu vực hiển thị thông tin tài khoản phía góc phải -->
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-muted small" asp-controller="Home" asp-action="Privacy">Bảo mật</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="btn btn-outline-danger btn-sm px-3" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <!-- Khung nội dung chính -->
+    <div class="container-fluid px-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - QuanLyQuanAn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Chân trang (Footer) -->
+    <footer class="border-top footer text-muted bg-white py-3 mt-auto">
+        <div class="container-fluid px-4 text-center text-md-start d-md-flex justify-content-between">
+            <span>&copy; 2026 - Hệ thống Quản Lý Quán Ăn</span>
+            <a class="text-decoration-none text-muted" asp-controller="Home" asp-action="Privacy">Chính sách bảo mật</a>
         </div>
     </footer>
+
+    <!-- Các thư viện Script -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

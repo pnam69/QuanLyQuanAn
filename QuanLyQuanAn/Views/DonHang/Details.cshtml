@@ -1,169 +1,209 @@
 ﻿@model QuanLyQuanAn.Models.DonHang
 
 @{
-    ViewData["Title"] = "Chi tiết đơn hàng";
+    ViewData["Title"] = "Chi tiết đơn hàng #" + Model.MaDon;
 }
 
-<h1>Chi tiết đơn hàng #@Model.MaDon</h1>
+<div class="container mt-4 mb-5">
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
-
-<div class="mb-4">
-    <p>
-        <strong>Bàn:</strong>
-        Bàn @Model.Ban?.SoBan
-    </p>
-
-    <p>
-        <strong>Nhân viên:</strong>
-        @Model.NhanVien?.HoTen
-    </p>
-
-    <p>
-        <strong>Ngày lập:</strong>
-        @Model.NgayLap.ToString("dd/MM/yyyy HH:mm")
-    </p>
-
-    <p>
-        <strong>Trạng thái:</strong>
-        @Model.TrangThai
-    </p>
-</div>
-
-<h3>Các món</h3>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Món ăn</th>
-            <th>Đơn giá</th>
-            <th>Số lượng</th>
-            <th>Thành tiền</th>
-            <th></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @if (Model.ChiTietDonHangs != null &&
-             Model.ChiTietDonHangs.Any())
-        {
-            foreach (var item in Model.ChiTietDonHangs)
-            {
-                <tr>
-                    <td>
-                        @item.MonAn?.TenMon
-                    </td>
-
-                    <td>
-                        @item.DonGia.ToString("N0") đ
-                    </td>
-
-                    <td>
-                        @item.SoLuong
-                    </td>
-
-                    <td>
-                        @item.ThanhTien.ToString("N0") đ
-                    </td>
-
-                    <td>
-                        @if (Model.TrangThai != "Đã thanh toán")
-                        {
-                            <form asp-controller="ChiTietDonHang"
-                                  asp-action="Delete"
-                                  method="post"
-                                  style="display:inline"
-                                  onsubmit="return confirm('Bạn có chắc muốn xóa món này?');">
-
-                                <input type="hidden"
-                                       name="id"
-                                       value="@item.MaChiTiet" />
-
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
-                                    Xóa
-                                </button>
-                            </form>
-                        }
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5"
-                    class="text-center">
-                    Chưa có món ăn nào.
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div class="text-end">
-    <h3>
-        Tổng tiền:
-        @Model.TongTien.ToString("N0") đ
-    </h3>
-</div>
-
-@if (Model.ThanhToan != null)
-{
-    <div class="card mt-3">
-        <div class="card-body">
-            <h5>Thông tin thanh toán</h5>
-
-            <p>
-                <strong>Số tiền:</strong>
-                @Model.ThanhToan.SoTien.ToString("N0") đ
-            </p>
-
-            <p>
-                <strong>Ngày thanh toán:</strong>
-                @Model.ThanhToan.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")
-            </p>
-
-            <p>
-                <strong>Phương thức:</strong>
-                @Model.ThanhToan.PhuongThuc
-            </p>
-
-            <p>
-                <strong>Trạng thái:</strong>
-                @Model.ThanhToan.TrangThai
-            </p>
-        </div>
-    </div>
-}
-
-<div class="mt-3">
-
-    @if (Model.TrangThai != "Đã thanh toán")
+    <!-- Cảnh báo lỗi -->
+    @if (TempData["Error"] != null)
     {
-        <a asp-controller="ChiTietDonHang"
-           asp-action="Create"
-           asp-route-maDon="@Model.MaDon"
-           class="btn btn-primary">
-            Thêm món
-        </a>
-
-        <a asp-controller="ThanhToan"
-           asp-action="Create"
-           asp-route-maDon="@Model.MaDon"
-           class="btn btn-success">
-            Thanh toán
-        </a>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
 
-    <a asp-action="Index"
-       class="btn btn-secondary">
-        Quay lại
-    </a>
+    <!-- Tiêu đề trang & Trạng thái -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <div class="bg-primary bg-opacity-10 text-primary rounded p-3 me-3 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+                  <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5M11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+                  <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293l-.646-.647a.5.5 0 0 0-.708 0L7 1.293l-.646-.647a.5.5 0 0 0-.708 0L5 1.293l-.646-.647a.5.5 0 0 0-.708 0L3 1.293zM2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z"/>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-1">Đơn Hàng #@Model.MaDon</h3>
+                <div>
+                    @if (Model.TrangThai == "Đã thanh toán")
+                    {
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success px-2 py-1">@Model.TrangThai</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning bg-opacity-10 text-dark border border-warning px-2 py-1">@Model.TrangThai</span>
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <!-- Các nút thao tác trên cùng -->
+        <div class="d-flex gap-2">
+            <a asp-action="Index" class="btn btn-light border shadow-sm px-3">
+                Quay lại
+            </a>
+            @if (Model.TrangThai != "Đã thanh toán")
+            {
+                <a asp-controller="ThanhToan" asp-action="Create" asp-route-maDon="@Model.MaDon" class="btn btn-success shadow-sm px-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack me-1 mb-1" viewBox="0 0 16 16">
+                      <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                      <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                    </svg>
+                    Thanh toán
+                </a>
+            }
+        </div>
+    </div>
 
+    <!-- Hàng chứa Thông tin chung & Bảng món ăn -->
+    <div class="row g-4">
+        
+        <!-- Cột trái: Bảng món ăn -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg h-100">
+                <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Chi tiết món ăn</h5>
+                    @if (Model.TrangThai != "Đã thanh toán")
+                    {
+                        <a asp-controller="ChiTietDonHang" asp-action="Create" asp-route-maDon="@Model.MaDon" class="btn btn-sm btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                            </svg>
+                            Thêm món
+                        </a>
+                    }
+                </div>
+                
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4">Tên Món</th>
+                                    <th>Đơn Giá</th>
+                                    <th class="text-center">SL</th>
+                                    <th>Thành Tiền</th>
+                                    <th class="text-end pe-4">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ChiTietDonHangs != null && Model.ChiTietDonHangs.Any())
+                                {
+                                    foreach (var item in Model.ChiTietDonHangs)
+                                    {
+                                        <tr>
+                                            <td class="ps-4 fw-semibold text-dark">@item.MonAn?.TenMon</td>
+                                            <td class="text-muted">@item.DonGia.ToString("N0") đ</td>
+                                            <td class="text-center"><span class="badge bg-light text-dark border px-2 py-1 fs-6">@item.SoLuong</span></td>
+                                            <td class="fw-bold text-primary">@item.ThanhTien.ToString("N0") đ</td>
+                                            <td class="text-end pe-4">
+                                                @if (Model.TrangThai != "Đã thanh toán")
+                                                {
+                                                    <form asp-controller="ChiTietDonHang" asp-action="Delete" method="post" class="d-inline m-0" onsubmit="return confirm('Bạn có chắc muốn xóa món này khỏi hóa đơn?');">
+                                                        <input type="hidden" name="id" value="@item.MaChiTiet" />
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa món">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                              <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5">
+                                            <div class="text-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-bag-x mb-3 opacity-50" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708"/>
+                                                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                                                </svg>
+                                                <p class="mb-0">Chưa có món ăn nào trong đơn hàng.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Footer: Tổng tiền -->
+                <div class="card-footer bg-white border-top p-4 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-muted fw-bold">TỔNG CỘNG</h5>
+                    <h3 class="mb-0 fw-bold text-danger">@Model.TongTien.ToString("N0") đ</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: Thông tin tổng quan & Thanh toán -->
+        <div class="col-lg-4">
+            
+            <!-- Card Thông tin đơn hàng -->
+            <div class="card shadow-sm border-0 rounded-lg mb-4">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="fw-bold mb-0">Thông tin chung</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 pt-0">
+                            <span class="text-muted">Vị trí</span>
+                            <span class="fw-bold">Bàn @Model.Ban?.SoBan</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span class="text-muted">Nhân viên</span>
+                            <span class="fw-semibold text-primary">@Model.NhanVien?.HoTen</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0 pb-0">
+                            <span class="text-muted">Giờ lập</span>
+                            <span class="fw-medium">@Model.NgayLap.ToString("HH:mm - dd/MM/yyyy")</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card Thông tin thanh toán (Chỉ hiện khi đã thanh toán) -->
+            @if (Model.ThanhToan != null)
+            {
+                <div class="card shadow-sm border-0 border-top border-success border-4 rounded-lg">
+                    <div class="card-header bg-white border-bottom py-3 d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-shield-check text-success me-2" viewBox="0 0 16 16">
+                          <path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.6.6 0 0 0 .388 0 2.4 2.4 0 0 0 .294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7.2 7.2 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.2 7.2 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                          <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                        <h5 class="fw-bold mb-0 text-success">Thông tin thanh toán</h5>
+                    </div>
+                    <div class="card-body bg-success bg-opacity-10">
+                        <ul class="list-group list-group-flush bg-transparent">
+                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 pt-0">
+                                <span class="text-muted">Đã thu</span>
+                                <span class="fw-bold text-success fs-5">@Model.ThanhToan.SoTien.ToString("N0") đ</span>
+                            </li>
+                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Phương thức</span>
+                                <span class="fw-medium">@Model.ThanhToan.PhuongThuc</span>
+                            </li>
+                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                                <span class="text-muted">Giao dịch lúc</span>
+                                <span class="fw-medium">@Model.ThanhToan.NgayThanhToan.ToString("HH:mm - dd/MM/yyyy")</span>
+                            </li>
+                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 pb-0">
+                                <span class="text-muted">Trạng thái</span>
+                                <span class="badge bg-success">@Model.ThanhToan.TrangThai</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
 </div>
