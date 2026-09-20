@@ -110,7 +110,14 @@
                 <div class="card-body p-4 d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted text-uppercase small fw-bold d-block mb-1">Tổng Doanh Thu</span>
-                        <h2 class="fw-bold mb-0 text-danger">@((decimal)ViewBag.TongDoanhThu).ToString("N0") đ</h2>
+                        <h2 class="fw-bold mb-0 text-danger">
+                            @(decimal.TryParse(ViewBag.TongDoanhThu?.ToString().Replace(",", "."), 
+                                System.Globalization.NumberStyles.Any, 
+                                System.Globalization.CultureInfo.InvariantCulture, 
+                                out decimal tong) 
+                                ? tong.ToString("N0") 
+                                : ViewBag.TongDoanhThu) đ
+                        </h2>
                     </div>
                     <div class="bg-success bg-opacity-10 text-success rounded p-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
