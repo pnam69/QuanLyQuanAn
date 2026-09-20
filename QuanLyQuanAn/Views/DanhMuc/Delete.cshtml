@@ -1,53 +1,78 @@
 ﻿@model QuanLyQuanAn.Models.DanhMuc
 
 @{
-    ViewData["Title"] = "Xóa danh mục";
+    ViewData["Title"] = "Xác nhận xóa danh mục";
 }
 
-<h1>Xóa danh mục</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 rounded-lg">
+                
+                <!-- Tiêu đề Cảnh báo -->
+                <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-danger bg-opacity-10 text-danger rounded p-2 me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0 text-danger">Xóa Danh Mục</h4>
+                            <small class="text-muted">Hành động này không thể hoàn tác</small>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Bạn có chắc muốn xóa danh mục này?</h3>
+                <div class="card-body p-4">
+                    
+                    <!-- Hộp thoại cảnh báo -->
+                    <div class="alert alert-warning d-flex align-items-center mb-4 shadow-sm" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-3" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        <div>
+                            <strong>Chú ý!</strong> Bạn có chắc chắn muốn xóa danh mục này khỏi hệ thống không? Điều này có thể ảnh hưởng đến các món ăn thuộc danh mục này.
+                        </div>
+                    </div>
 
-<div>
-    <dl class="row">
+                    <!-- Khối thông tin chi tiết -->
+                    <div class="bg-light rounded p-4 mb-4 border">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4 text-muted fw-normal mb-2">Mã danh mục:</dt>
+                            <dd class="col-sm-8 fw-bold mb-2">@Model.MaDM</dd>
 
-        <dt class="col-sm-3">
-            Mã danh mục
-        </dt>
+                            <dt class="col-sm-4 text-muted fw-normal mb-2">Tên danh mục:</dt>
+                            <dd class="col-sm-8 fw-bold mb-2 text-primary">@Model.TenDM</dd>
 
-        <dd class="col-sm-9">
-            @Model.MaDM
-        </dd>
+                            <dt class="col-sm-4 text-muted fw-normal mb-0">Mô tả:</dt>
+                            <dd class="col-sm-8 mb-0">
+                                @if (string.IsNullOrEmpty(Model.MoTa))
+                                {
+                                    <span class="text-muted fst-italic">Không có mô tả</span>
+                                }
+                                else
+                                {
+                                    @Model.MoTa
+                                }
+                            </dd>
+                        </dl>
+                    </div>
 
-        <dt class="col-sm-3">
-            Tên danh mục
-        </dt>
+                    <!-- Form xác nhận xóa -->
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="MaDM" />
+                        
+                        <div class="d-flex justify-content-end gap-2 mt-2">
+                            <a asp-action="Index" class="btn btn-light border px-4">Hủy thao tác</a>
+                            <button type="submit" class="btn btn-danger px-4 shadow-sm">
+                                Xác nhận xóa
+                            </button>
+                        </div>
+                    </form>
 
-        <dd class="col-sm-9">
-            @Model.TenDM
-        </dd>
-
-        <dt class="col-sm-3">
-            Mô tả
-        </dt>
-
-        <dd class="col-sm-9">
-            @Model.MoTa
-        </dd>
-
-    </dl>
-
-    <form asp-action="Delete" method="post">
-
-        <input type="hidden" asp-for="MaDM" />
-
-        <button type="submit" class="btn btn-danger">
-            Xóa
-        </button>
-
-        <a asp-action="Index" class="btn btn-secondary">
-            Hủy
-        </a>
-
-    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

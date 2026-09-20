@@ -4,50 +4,98 @@
     ViewData["Title"] = "Sửa danh mục";
 }
 
-<h1>Sửa danh mục</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 rounded-lg">
+                
+                <!-- Tiêu đề (Header) -->
+                <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
+                            <!-- Icon Edit -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">Cập Nhật Danh Mục</h4>
+                            <small class="text-muted">Chỉnh sửa thông tin phân loại thực đơn</small>
+                        </div>
+                    </div>
+                </div>
 
-<form asp-action="Edit" method="post">
+                <div class="card-body p-4">
+                    <form asp-action="Edit" method="post">
+                        
+                        <!-- Input ẩn chứa ID để update đúng dòng -->
+                        <input type="hidden" asp-for="MaDM" />
+                        
+                        <!-- Input: Tên danh mục -->
+                        <div class="mb-4">
+                            <label asp-for="TenDM" class="form-label fw-semibold text-secondary small">TÊN DANH MỤC</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
+                                      <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0"/>
+                                      <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1m0 5.586 7 7L13.586 9l-7-7H2z"/>
+                                    </svg>
+                                </span>
+                                <input asp-for="TenDM" class="form-control bg-light border-start-0" placeholder="Nhập tên danh mục..." />
+                            </div>
+                            <span asp-validation-for="TenDM" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-    <input type="hidden" asp-for="MaDM" />
+                        <!-- Textarea: Mô tả -->
+                        <div class="mb-4">
+                            <label asp-for="MoTa" class="form-label fw-semibold text-secondary small">MÔ TẢ</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                                      <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                                      <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8m0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+                                    </svg>
+                                </span>
+                                <textarea asp-for="MoTa" class="form-control bg-light border-start-0" rows="3" placeholder="Nhập mô tả cho danh mục này..."></textarea>
+                            </div>
+                            <span asp-validation-for="MoTa" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-    <div class="mb-3">
-        <label asp-for="TenDM" class="form-label"></label>
+                        <!-- Select: Trạng thái -->
+                        <div class="mb-4">
+                            <label asp-for="TrangThai" class="form-label fw-semibold text-secondary small">TRẠNG THÁI HOẠT ĐỘNG</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+                                    </svg>
+                                </span>
+                                <select asp-for="TrangThai" class="form-select bg-light border-start-0">
+                                    <option value="Hoạt động">Hoạt động</option>
+                                    <option value="Ngừng hoạt động">Ngừng hoạt động</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="TrangThai" class="text-danger small mt-1 d-block"></span>
+                        </div>
 
-        <input asp-for="TenDM" class="form-control" />
+                        <hr class="text-muted my-4" />
 
-        <span asp-validation-for="TenDM"
-              class="text-danger"></span>
+                        <!-- Nút Điều Hướng & Submit -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
+                            <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle me-1 mb-1" viewBox="0 0 16 16">
+                                  <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                  <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                </svg>
+                                Lưu thay đổi
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="MoTa" class="form-label"></label>
-
-        <textarea asp-for="MoTa"
-                  class="form-control"></textarea>
-
-        <span asp-validation-for="MoTa"
-              class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="TrangThai" class="form-label">
-            Trạng thái
-        </label>
-
-        <select asp-for="TrangThai" class="form-select">
-            <option value="Hoạt động">Hoạt động</option>
-            <option value="Ngừng hoạt động">Ngừng hoạt động</option>
-        </select>
-
-        <span asp-validation-for="TrangThai" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-        Lưu
-    </button>
-
-    <a asp-action="Index" class="btn btn-secondary">
-        Quay lại
-    </a>
-
-</form>
+</div>

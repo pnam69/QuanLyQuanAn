@@ -1,192 +1,226 @@
 ﻿@{
-    ViewData["Title"] = "Thống kê";
+    ViewData["Title"] = "Báo cáo thống kê doanh thu";
 
-    var chiTietBanChay =
-        ViewBag.ChiTietBanChay as IEnumerable<dynamic>
-        ?? new List<dynamic>();
-
-    var doanhThuTheoNgay =
-        ViewBag.DoanhThuTheoNgay as IEnumerable<dynamic>
-        ?? new List<dynamic>();
+    var chiTietBanChay = ViewBag.ChiTietBanChay as IEnumerable<dynamic> ?? new List<dynamic>();
+    var doanhThuTheoNgay = ViewBag.DoanhThuTheoNgay as IEnumerable<dynamic> ?? new List<dynamic>();
 }
 
-<h1>Thống kê</h1>
+<div class="container-fluid mt-4 mb-5">
 
-<div asp-validation-summary="All"
-     class="text-danger mb-3">
-</div>
+    <!-- Tiêu đề trang & Bộ lọc thời gian -->
+    <div class="card shadow-sm border-0 rounded-lg mb-4">
+        <div class="card-header bg-white border-bottom py-3 px-4">
+            <div class="d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                      <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="fw-bold mb-0">Báo Cáo Thống Kê Doanh Thu</h4>
+                    <small class="text-muted">Phân tích hiệu suất bán hàng và doanh thu theo thời gian</small>
+                </div>
+            </div>
+        </div>
 
-<form asp-action="Index"
-      method="get"
-      class="row g-3 mb-4">
+        <div class="card-body p-4">
+            
+            <div asp-validation-summary="All" class="alert alert-danger p-2 mb-3 rounded shadow-sm" role="alert"></div>
 
-    <div class="col-md-4">
-        <label class="form-label">
-            Từ ngày
-        </label>
+            <!-- Form Lọc dữ liệu -->
+            <form asp-action="Index" method="get" class="row g-3 align-items-end">
 
-        <input type="date"
-               name="tuNgay"
-               value="@ViewBag.TuNgay"
-               class="form-control" />
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-secondary small">TỪ NGÀY</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                              <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                            </svg>
+                        </span>
+                        <input type="date" name="tuNgay" value="@ViewBag.TuNgay" class="form-control bg-light border-start-0" />
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-secondary small">ĐẾN NGÀY</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                              <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                            </svg>
+                        </span>
+                        <input type="date" name="denNgay" value="@ViewBag.DenNgay" class="form-control bg-light border-start-0" />
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex gap-2 flex-wrap justify-content-md-end mt-3 mt-md-0">
+                    <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search me-1 mb-1" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                        Thống kê
+                    </button>
+
+                    <a asp-action="Export" asp-route-tuNgay="@ViewBag.TuNgay" asp-route-denNgay="@ViewBag.DenNgay" class="btn btn-success shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel me-1 mb-1" viewBox="0 0 16 16">
+                          <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.34 10l-2.224 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.64L8.66 10l2.224-2.68a.5.5 0 0 0-.768-.64L8 9.219z"/>
+                          <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                        </svg>
+                        Xuất Excel
+                    </a>
+
+                    <a asp-action="ExportPdf" asp-route-tuNgay="@ViewBag.TuNgay" asp-route-denNgay="@ViewBag.DenNgay" class="btn btn-danger shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf me-1 mb-1" viewBox="0 0 16 16">
+                          <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                        </svg>
+                        Xuất PDF
+                    </a>
+                </div>
+
+            </form>
+        </div>
     </div>
 
-    <div class="col-md-4">
-        <label class="form-label">
-            Đến ngày
-        </label>
+    <!-- Khối Thẻ Chỉ Số (KPI Cards) -->
+    <div class="row g-4 mb-5">
+        
+        <!-- Card: Tổng số đơn -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 border-start border-primary border-4 rounded-lg h-100">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted text-uppercase small fw-bold d-block mb-1">Tổng Số Đơn Đã Thanh Toán</span>
+                        <h2 class="fw-bold mb-0 text-dark">@ViewBag.TongDon</h2>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 text-primary rounded p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
+                          <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l-.5-1a.5.5 0 0 1 .367-.27m.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <input type="date"
-               name="denNgay"
-               value="@ViewBag.DenNgay"
-               class="form-control" />
+        <!-- Card: Tổng doanh thu -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 border-start border-success border-4 rounded-lg h-100">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted text-uppercase small fw-bold d-block mb-1">Tổng Doanh Thu</span>
+                        <h2 class="fw-bold mb-0 text-danger">@((decimal)ViewBag.TongDoanhThu).ToString("N0") đ</h2>
+                    </div>
+                    <div class="bg-success bg-opacity-10 text-success rounded p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                          <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                          <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-md-4 d-flex align-items-end">
-        <button type="submit"
-                class="btn btn-primary">
-            Thống kê
-        </button>
-    </div>
-    <div class="col-md-4 d-flex align-items-end">
-        <button type="submit"
-                class="btn btn-primary me-2">
-            Thống kê
-        </button>
+    <!-- Bảng: Món bán chạy -->
+    <div class="card shadow-sm border-0 rounded-lg mb-5">
+        <div class="card-header bg-white border-bottom py-3 px-4">
+            <h5 class="fw-bold mb-0">Món Ăn Bán Chạy Nhất</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4" style="width: 80px;">STT</th>
+                            <th>Tên Món Ăn</th>
+                            <th class="text-center">Số Lượng Bán</th>
+                            <th class="text-end pe-4">Tổng Doanh Thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int stt = 1;
+                        }
+                        @foreach (var item in chiTietBanChay)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-muted">@stt</td>
+                                <td class="fw-bold text-dark">@item.TenMon</td>
+                                <td class="text-center">
+                                    <span class="badge bg-light text-dark border px-2 py-1">@item.SoLuong</span>
+                                </td>
+                                <td class="text-end pe-4 fw-bold text-primary">@item.DoanhThu.ToString("N0") đ</td>
+                            </tr>
+                            stt++;
+                        }
 
-        <a asp-action="Export"
-           asp-route-tuNgay="@ViewBag.TuNgay"
-           asp-route-denNgay="@ViewBag.DenNgay"
-           class="btn btn-success">
-            Xuất Excel
-        </a>
-
-        <a asp-action="ExportPdf"
-           asp-route-tuNgay="@ViewBag.TuNgay"
-           asp-route-denNgay="@ViewBag.DenNgay"
-           class="btn btn-danger">
-            Xuất PDF
-        </a>
-    </div>
-
-</form>
-
-<div class="row g-3 mb-5">
-
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5>Tổng số đơn đã thanh toán</h5>
-
-                <h2>
-                    @ViewBag.TongDon
-                </h2>
+                        @if (stt == 1)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    Không có dữ liệu món bán chạy trong khoảng thời gian này.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5>Tổng doanh thu</h5>
+    <!-- Bảng: Doanh thu theo ngày -->
+    <div class="card shadow-sm border-0 rounded-lg mb-4">
+        <div class="card-header bg-white border-bottom py-3 px-4">
+            <h5 class="fw-bold mb-0">Chi Tiết Doanh Thu Theo Ngày</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Ngày Giao Dịch</th>
+                            <th class="text-center">Số Lượng Đơn</th>
+                            <th class="text-end pe-4">Doanh Thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in doanhThuTheoNgay)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-secondary">
+                                    @item.Ngay.ToString("dd/MM/yyyy")
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-light text-dark border px-2 py-1">@item.SoDon đơn</span>
+                                </td>
+                                <td class="text-end pe-4 fw-bold text-success">
+                                    @item.DoanhThu.ToString("N0") đ
+                                </td>
+                            </tr>
+                        }
 
-                <h2>
-                    @((decimal)ViewBag.TongDoanhThu) đ
-                </h2>
+                        @if (!doanhThuTheoNgay.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center py-5 text-muted">
+                                    Không có dữ liệu doanh thu theo ngày trong khoảng thời gian này.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-</div>
+    <!-- Nút quay lại -->
+    <div class="mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-light border px-4 shadow-sm">
+            Quay lại trang chủ
+        </a>
+    </div>
 
-<h3>Món bán chạy</h3>
-
-<table class="table table-bordered mb-5">
-    <thead>
-        <tr>
-            <th>STT</th>
-            <th>Món ăn</th>
-            <th>Số lượng bán</th>
-            <th>Doanh thu</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @{
-            int stt = 1;
-        }
-
-        @foreach (var item in chiTietBanChay)
-        {
-            <tr>
-                <td>@stt</td>
-                <td>@item.TenMon</td>
-                <td>@item.SoLuong</td>
-                <td>
-                    @item.DoanhThu.ToString("N0") đ
-                </td>
-            </tr>
-
-            stt++;
-        }
-
-        @if (stt == 1)
-        {
-            <tr>
-                <td colspan="4"
-                    class="text-center">
-                    Chưa có dữ liệu.
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h3>Doanh thu theo ngày</h3>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Ngày</th>
-            <th>Số đơn</th>
-            <th>Doanh thu</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in doanhThuTheoNgay)
-        {
-            <tr>
-                <td>
-                    @item.Ngay.ToString("dd/MM/yyyy")
-                </td>
-
-                <td>
-                    @item.SoDon
-                </td>
-
-                <td>
-                    @item.DoanhThu.ToString("N0") đ
-                </td>
-            </tr>
-        }
-
-        @if (!doanhThuTheoNgay.Any())
-        {
-            <tr>
-                <td colspan="3"
-                    class="text-center">
-                    Chưa có dữ liệu.
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div class="mt-4">
-    <a asp-controller="Home"
-       asp-action="Index"
-       class="btn btn-secondary">
-        Quay lại
-    </a>
 </div>

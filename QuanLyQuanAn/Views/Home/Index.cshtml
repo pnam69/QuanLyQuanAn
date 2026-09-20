@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ";
+    ViewData["Title"] = "Trang chủ hệ thống";
 
     var hoTen = ViewBag.HoTen as string;
     var vaiTro = ViewBag.VaiTro as string;
@@ -10,96 +10,198 @@
 
 @if (!isLoggedIn)
 {
-    <div class="text-center mt-5">
-        <h1>QUẢN LÝ QUÁN ĂN</h1>
-
-        <p class="mt-3">
-            Vui lòng đăng nhập để sử dụng hệ thống.
-        </p>
-
-        <a asp-controller="Account"
-           asp-action="Login"
-           class="btn btn-primary">
-            Đăng nhập
-        </a>
+    <!-- Giao diện khi chưa đăng nhập -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center py-5">
+                <div class="mb-4 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                        <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zM4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
+                    </svg>
+                </div>
+                <h1 class="fw-bold mb-3">HỆ THỐNG QUẢN LÝ QUÁN ĂN</h1>
+                <p class="text-muted mb-4 lead">Vui lòng đăng nhập tài khoản nhân viên hoặc quản trị viên để bắt đầu làm việc.</p>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg px-5 shadow-sm fw-bold">
+                    Đăng nhập ngay
+                </a>
+            </div>
+        </div>
     </div>
 
     return;
 }
 
-<div class="text-center mb-5">
-    <h1>QUẢN LÝ QUÁN ĂN</h1>
-
-    <p class="mt-3">
-        Xin chào, <strong>@hoTen</strong>
-    </p>
-
-    <p>
-        Vai trò: <strong>@vaiTro</strong>
-    </p>
-</div>
-
-<div class="row g-3">
-
-    @if (isAdmin)
-    {
-        <div class="col-md-4">
-            <a asp-controller="NhanVien"
-               asp-action="Index"
-               class="btn btn-outline-primary w-100 p-4">
-                Quản lý nhân viên
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a asp-controller="DanhMuc"
-               asp-action="Index"
-               class="btn btn-outline-primary w-100 p-4">
-                Quản lý danh mục
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a asp-controller="Ban"
-               asp-action="Index"
-               class="btn btn-outline-primary w-100 p-4">
-                Quản lý bàn
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a asp-controller="ThongKe"
-               asp-action="Index"
-               class="btn btn-outline-primary w-100 p-4">
-                Thống kê
-            </a>
-        </div>
-    }
-
-    <div class="col-md-4">
-        <a asp-controller="MonAn"
-           asp-action="Index"
-           class="btn btn-outline-primary w-100 p-4">
-            Quản lý món ăn
-        </a>
-    </div>
-
+<!-- Giao diện Trang chủ khi đã đăng nhập -->
+<div class="container mt-4 mb-5">
     
-
-    <div class="col-md-4">
-        <a asp-controller="DonHang"
-           asp-action="Index"
-           class="btn btn-outline-primary w-100 p-4">
-            Quản lý đơn hàng
-        </a>
+    <!-- Banner Chào mừng -->
+    <div class="card bg-primary text-white shadow-sm border-0 rounded-lg p-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-white text-primary fw-bold px-2 py-1 mb-2">@vaiTro</span>
+                <h2 class="fw-bold mb-1">Xin chào, @hoTen!</h2>
+                <p class="mb-0 opacity-75">Chúc bạn một ngày làm việc hiệu quả tại hệ thống quản lý quán ăn.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="text-white-50 small">Hệ thống đang hoạt động ổn định</div>
+                <div class="fw-bold"><span class="badge bg-success">&bull; Trực tuyến</span></div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-4">
-        <a asp-controller="Account"
-           asp-action="Logout"
-           class="btn btn-outline-danger w-100 p-4">
-            Đăng xuất
-        </a>
-    </div>
+    <!-- Khối Menu Chức năng (Dashboard Grid) -->
+    <h5 class="fw-bold text-secondary mb-3 text-uppercase small tracking-wide">Danh mục quản lý</h5>
+    <div class="row g-4">
 
+        @if (isAdmin)
+        {
+            <!-- Quản lý nhân viên -->
+            <div class="col-md-4 col-sm-6">
+                <a asp-controller="NhanVien" asp-action="Index" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                        <div class="card-body p-4 d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded p-3 me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                  <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">Nhân Viên</h5>
+                                <p class="text-muted small mb-0">Quản lý tài khoản & phân quyền</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quản lý danh mục -->
+            <div class="col-md-4 col-sm-6">
+                <a asp-controller="DanhMuc" asp-action="Index" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                        <div class="card-body p-4 d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 text-success rounded p-3 me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                                  <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586zm8 3.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+                                  <path d="M1.082 5.342a2.003 2.003 0 0 0-.082 1.244l.83 3.318c.213.854.912 1.503 1.777 1.68l3.319.829c.414.103.84.053 1.226-.118l-.514-2.054a1.002 1.002 0 0 1 .159-.88l1.378-1.837-1.378-1.836a1 1 0 0 1-.159-.88l.514-2.053a1.996 1.996 0 0 0-1.226-.118l-3.32.83a2.004 2.004 0 0 0-1.776 1.679z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">Danh Mục</h5>
+                                <p class="text-muted small mb-0">Phân loại nhóm món ăn</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quản lý bàn -->
+            <div class="col-md-4 col-sm-6">
+                <a asp-controller="Ban" asp-action="Index" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                        <div class="card-body p-4 d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 text-warning rounded p-3 me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
+                                    <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">Sơ Đồ Bàn</h5>
+                                <p class="text-muted small mb-0">Quản lý vị trí chỗ ngồi</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Thống kê -->
+            <div class="col-md-4 col-sm-6">
+                <a asp-controller="ThongKe" asp-action="Index" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                        <div class="card-body p-4 d-flex align-items-center">
+                            <div class="bg-info bg-opacity-10 text-info rounded p-3 me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+                                  <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">Báo Cáo Thống Kê</h5>
+                                <p class="text-muted small mb-0">Doanh thu & hiệu suất</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        <!-- Quản lý món ăn -->
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="MonAn" asp-action="Index" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="bg-danger bg-opacity-10 text-danger rounded p-3 me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cup-hot-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-1.006A.5.5 0 0 0 13.5 6zM13 12.5a2.01 2.01 0 0 1-.316-.025l.867-3.924A2 2 0 0 1 13 12.5"/>
+                              <path d="M2.272 5.51a.5.5 0 0 1-.584-.427C1.536 2.061 2.89 0 5 0c.586 0 1.152.173 1.67.502.665.42 1.1 1.15 1.488 1.942.392.802.73 1.624 1.305 2.115.485.412 1.144.436 1.872.298a.5.5 0 1 1 .194.98c-.852.169-1.782.116-2.525-.516-.764-.648-1.154-1.593-1.564-2.433-.393-.804-.766-1.566-1.282-1.892C5.69 1.173 5.314 1 5 1c-1.636 0-2.617 1.517-3.151 3.925a.5.5 0 0 1-.423.435"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1">Thực Đơn Món Ăn</h5>
+                            <p class="text-muted small mb-0">Quản lý món & đơn giá</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Quản lý đơn hàng -->
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="DonHang" asp-action="Index" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-3 me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
+                              <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l-.5-1a.5.5 0 0 1 .367-.27m.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1">Đơn Hàng & Thu Ngân</h5>
+                            <p class="text-muted small mb-0">Mở bàn, gọi món & thanh toán</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Đăng xuất -->
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Account" asp-action="Logout" class="text-decoration-none">
+                <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="bg-danger bg-opacity-10 text-danger rounded p-3 me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                              <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1">Đăng Xuất</h5>
+                            <p class="text-muted small mb-0">Thoát khỏi phiên làm việc</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
 </div>
+
+<!-- Thêm một chút CSS tùy chỉnh hiệu ứng Hover mượt mà cho các Card chức năng -->
+<style>
+    .card-hover {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
