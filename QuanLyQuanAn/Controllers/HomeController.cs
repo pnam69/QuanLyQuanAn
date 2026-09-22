@@ -11,5 +11,11 @@ namespace QuanLyQuanAn.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Privacy()
+        {
+            return RedirectToAction("Privacy", "Home");
+        }
     }
 }
