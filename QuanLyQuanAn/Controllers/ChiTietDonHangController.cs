@@ -6,7 +6,7 @@ using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên", "Nhân viên")]
+    [RoleAuthorize("Admin", "Employee")]
     public class ChiTietDonHangController : Controller
     {
         private readonly AppDbContext _context;

@@ -5,7 +5,7 @@
     var vaiTro = ViewBag.VaiTro as string;
 
     bool isLoggedIn = !string.IsNullOrEmpty(vaiTro);
-    bool isAdmin = vaiTro == "Quản trị viên";
+    bool isAdmin = vaiTro == "Admin";
 }
 
 @if (!isLoggedIn)
@@ -20,7 +20,7 @@
                     </svg>
                 </div>
                 <h1 class="fw-bold mb-3">HỆ THỐNG QUẢN LÝ QUÁN ĂN</h1>
-                <p class="text-muted mb-4 lead">Vui lòng đăng nhập tài khoản nhân viên hoặc quản trị viên để bắt đầu làm việc.</p>
+                <p class="text-muted mb-4 lead">Vui lòng đăng nhập tài khoản Employee hoặc Admin để bắt đầu làm việc.</p>
                 <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg px-5 shadow-sm fw-bold">
                     Đăng nhập ngay
                 </a>
@@ -55,7 +55,7 @@
 
         @if (isAdmin)
         {
-            <!-- Quản lý nhân viên -->
+            <!-- Quản lý Employee -->
             <div class="col-md-4 col-sm-6">
                 <a asp-controller="NhanVien" asp-action="Index" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -66,7 +66,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h5 class="fw-bold text-dark mb-1">Nhân Viên</h5>
+                                <h5 class="fw-bold text-dark mb-1">Employee</h5>
                                 <p class="text-muted small mb-0">Quản lý tài khoản & phân quyền</p>
                             </div>
                         </div>

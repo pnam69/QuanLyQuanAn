@@ -37,7 +37,7 @@ namespace QuanLyQuanAn.Models
         [Required(ErrorMessage = "Vui lòng chọn vai trò")]
         [StringLength(30)]
         [Display(Name = "Vai trò")]
-        public string VaiTro { get; set; } = "Nhân viên";
+        public string VaiTro { get; set; } = "Employee";
 
         [Display(Name = "Trạng thái")]
         public string TrangThai { get; set; } = "Hoạt động";

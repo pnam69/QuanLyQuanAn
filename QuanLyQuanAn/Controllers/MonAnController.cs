@@ -7,7 +7,7 @@ using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên", "Nhân viên")]
+    [RoleAuthorize("Admin", "Employee")]
     public class MonAnController : Controller
     {
         private readonly AppDbContext _context;

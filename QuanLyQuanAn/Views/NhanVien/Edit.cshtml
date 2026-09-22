@@ -1,7 +1,7 @@
 ﻿@model QuanLyQuanAn.Models.NhanVien
 
 @{
-    ViewData["Title"] = "Sửa thông tin nhân viên";
+    ViewData["Title"] = "Sửa thông tin Employee";
 }
 
 <div class="container mt-4 mb-5">
@@ -20,7 +20,7 @@
                         </div>
                         <div>
                             <h4 class="fw-bold mb-0">Cập Nhật Nhân Sự</h4>
-                            <small class="text-muted">Chỉnh sửa thông tin tài khoản và phân quyền nhân viên</small>
+                            <small class="text-muted">Chỉnh sửa thông tin tài khoản và phân quyền Employee</small>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                 <div class="card-body p-4">
                     <form asp-action="Edit" method="post">
 
-                        <!-- Input ẩn chứa Mã nhân viên -->
+                        <!-- Input ẩn chứa Mã Employee -->
                         <input type="hidden" asp-for="MaNV" />
 
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 mb-4 rounded shadow-sm" role="alert"></div>
@@ -42,7 +42,7 @@
                                       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.5c0-.175-.243-.75-1.928-1.155C10.843 11.32 9.4 11 8 11s-2.843.32-4.072.845C2.243 12.25 2 12.825 2 13s.2.5 1 .5h10c.8 0 1-.3 1-.5"/>
                                     </svg>
                                 </span>
-                                <input asp-for="HoTen" class="form-control bg-light border-start-0" placeholder="Nhập họ tên nhân viên..." />
+                                <input asp-for="HoTen" class="form-control bg-light border-start-0" placeholder="Nhập họ tên Employee..." />
                             </div>
                             <span asp-validation-for="HoTen" class="text-danger small mt-1 d-block"></span>
                         </div>
@@ -70,7 +70,7 @@
                                       <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
                                     </svg>
                                 </span>
-                                <input asp-for="Email" class="form-control bg-light border-start-0" placeholder="Email nhân viên..." />
+                                <input asp-for="Email" class="form-control bg-light border-start-0" placeholder="Email Employee..." />
                             </div>
                             <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
                         </div>
@@ -114,7 +114,7 @@
                                     </svg>
                                 </span>
                                 <select asp-for="VaiTro" class="form-select bg-light border-start-0">
-                                    <option value="Nhân viên">Nhân viên</option>
+                                    <option value="Employee">Employee</option>
                                     <option value="Admin">Admin</option>
                                 </select>
                             </div>

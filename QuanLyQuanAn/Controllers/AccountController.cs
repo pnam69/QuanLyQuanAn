@@ -62,7 +62,7 @@ namespace QuanLyQuanAn.Controllers
             {
                 ModelState.AddModelError(
                     "",
-                    "Tài khoản nhân viên hiện không hoạt động.");
+                    "Tài khoản Employee hiện không hoạt động.");
 
                 return View();
             }

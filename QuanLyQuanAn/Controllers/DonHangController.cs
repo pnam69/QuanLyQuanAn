@@ -6,7 +6,7 @@ using QuanLyQuanAn.Models;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên", "Nhân viên")]
+    [RoleAuthorize("Admin", "Employee")]
     public class DonHangController : Controller
     {
         private readonly AppDbContext _context;

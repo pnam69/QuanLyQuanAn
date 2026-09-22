@@ -8,7 +8,7 @@ using QuestPDF.Infrastructure;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên")]
+    [RoleAuthorize("Admin")]
     public class ThongKeController : Controller
     {
         private readonly AppDbContext _context;
@@ -208,7 +208,7 @@ namespace QuanLyQuanAn.Controllers
             worksheet.Cell(headerRow, 1).Value = "Mã đơn";
             worksheet.Cell(headerRow, 2).Value = "Mã bàn";
             worksheet.Cell(headerRow, 3).Value = "Số bàn";
-            worksheet.Cell(headerRow, 4).Value = "Nhân viên";
+            worksheet.Cell(headerRow, 4).Value = "Employee";
             worksheet.Cell(headerRow, 5).Value = "Ngày lập";
             worksheet.Cell(headerRow, 6).Value = "Tổng tiền";
             worksheet.Cell(headerRow, 7).Value = "Trạng thái";
@@ -493,7 +493,7 @@ namespace QuanLyQuanAn.Controllers
 
                                         header.Cell()
                                             .Element(HeaderCell)
-                                            .Text("Nhân viên");
+                                            .Text("Employee");
 
                                         header.Cell()
                                             .Element(HeaderCell)

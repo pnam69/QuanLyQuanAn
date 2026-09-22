@@ -1,7 +1,7 @@
 ﻿@model QuanLyQuanAn.Models.NhanVien
 
 @{
-    ViewData["Title"] = "Xác nhận xóa nhân viên";
+    ViewData["Title"] = "Xác nhận xóa Employee";
 }
 
 <div class="container mt-4 mb-5">
@@ -18,7 +18,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h4 class="fw-bold mb-0 text-danger">Xóa Nhân Viên</h4>
+                            <h4 class="fw-bold mb-0 text-danger">Xóa Employee</h4>
                             <small class="text-muted">Hành động này không thể hoàn tác</small>
                         </div>
                     </div>
@@ -32,14 +32,14 @@
                             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                         </svg>
                         <div>
-                            <strong>Cảnh báo!</strong> Bạn có chắc chắn muốn xóa tài khoản nhân viên này khỏi hệ thống không?
+                            <strong>Cảnh báo!</strong> Bạn có chắc chắn muốn xóa tài khoản Employee này khỏi hệ thống không?
                         </div>
                     </div>
 
                     <!-- Khối thông tin chi tiết -->
                     <div class="bg-light rounded p-4 mb-4 border">
                         <dl class="row mb-0">
-                            <dt class="col-sm-4 text-muted fw-normal mb-2">Mã nhân viên:</dt>
+                            <dt class="col-sm-4 text-muted fw-normal mb-2">Mã Employee:</dt>
                             <dd class="col-sm-8 fw-bold mb-2">#@Model.MaNV</dd>
 
                             <dt class="col-sm-4 text-muted fw-normal mb-2">Họ tên:</dt>
@@ -53,7 +53,7 @@
 
                             <dt class="col-sm-4 text-muted fw-normal mb-2">Vai trò:</dt>
                             <dd class="col-sm-8 mb-2">
-                                @if (Model.VaiTro == "Admin" || Model.VaiTro == "Quản trị viên")
+                                @if (Model.VaiTro == "Admin" || Model.VaiTro == "Admin")
                                 {
                                     <span class="badge bg-danger bg-opacity-10 text-danger border border-danger">@Model.VaiTro</span>
                                 }

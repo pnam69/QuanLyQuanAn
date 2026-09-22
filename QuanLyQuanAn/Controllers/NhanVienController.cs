@@ -6,7 +6,7 @@ using QuanLyQuanAn.Filters;
 
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên")]
+    [RoleAuthorize("Admin")]
     public class NhanVienController : Controller
     {
         private readonly AppDbContext _context;
@@ -192,7 +192,7 @@ namespace QuanLyQuanAn.Controllers
             if (currentMaNV == id)
             {
                 TempData["Error"] =
-                    "Không thể xóa tài khoản nhân viên đang đăng nhập.";
+                    "Không thể xóa tài khoản Employee đang đăng nhập.";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -203,7 +203,7 @@ namespace QuanLyQuanAn.Controllers
             if (dangCoDonHang)
             {
                 TempData["Error"] =
-                    "Không thể xóa nhân viên này vì đã có đơn hàng liên quan.";
+                    "Không thể xóa Employee này vì đã có đơn hàng liên quan.";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -211,7 +211,7 @@ namespace QuanLyQuanAn.Controllers
             _context.NhanViens.Remove(nhanVien);
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Xóa nhân viên thành công.";
+            TempData["Success"] = "Xóa Employee thành công.";
 
             return RedirectToAction(nameof(Index));
         }

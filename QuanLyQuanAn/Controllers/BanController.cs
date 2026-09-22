@@ -5,7 +5,7 @@ using QuanLyQuanAn.Models;
 using QuanLyQuanAn.Filters;
 namespace QuanLyQuanAn.Controllers
 {
-    [RoleAuthorize("Quản trị viên")]
+    [RoleAuthorize("Admin")]
     public class BanController : Controller
     {
         private readonly AppDbContext _context;
