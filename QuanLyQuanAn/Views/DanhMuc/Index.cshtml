@@ -6,7 +6,6 @@
 
 <div class="container-fluid mt-4">
     
-    <!-- Thông báo hệ thống (Cảnh báo thành công/lỗi) -->
     @if (TempData["Success"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
@@ -29,14 +28,11 @@
         </div>
     }
 
-    <!-- Khối nội dung chính -->
     <div class="card shadow-sm border-0 rounded-lg">
         
-        <!-- Header Card: Tiêu đề & Thanh công cụ -->
         <div class="card-header bg-white border-bottom py-3 px-4">
             <div class="row align-items-center">
                 
-                <!-- Tiêu đề -->
                 <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
                     <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
@@ -47,7 +43,6 @@
                     <h4 class="fw-bold mb-0">Quản Lý Danh Mục</h4>
                 </div>
 
-                <!-- Tìm kiếm & Nút thêm mới -->
                 <div class="col-md-8 text-md-end">
                     <form method="get" class="d-flex justify-content-md-end align-items-center gap-2">
                         <div class="input-group shadow-sm" style="max-width: 320px;">
@@ -71,7 +66,6 @@
             </div>
         </div>
 
-        <!-- Bảng Dữ Liệu -->
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -93,7 +87,6 @@
                                     <td class="ps-4 text-muted fw-semibold">#@item.MaDM</td>
                                     <td class="fw-bold text-primary">@item.TenDM</td>
                                     
-                                    <!-- Cắt chữ hoặc hiện fst-italic nếu mô tả trống -->
                                     <td class="text-truncate" style="max-width: 300px;" title="@item.MoTa">
                                         @if (string.IsNullOrWhiteSpace(item.MoTa))
                                         {
@@ -105,7 +98,6 @@
                                         }
                                     </td>
                                     
-                                    <!-- Render trạng thái bằng Badge thay vì True/False -->
                                     <td>
                                         @if (item.TrangThai == "Hoạt động")
                                         {

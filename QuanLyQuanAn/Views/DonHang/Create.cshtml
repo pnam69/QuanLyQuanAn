@@ -10,7 +10,6 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-lg">
                 
-                <!-- Tiêu đề Form -->
                 <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
@@ -29,10 +28,8 @@
                 <div class="card-body p-4">
                     <form asp-action="Create" method="post">
                         
-                        <!-- Tổng hợp lỗi Validation -->
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 mb-4 rounded shadow-sm" role="alert"></div>
 
-                        <!-- Input: Employee phục vụ -->
                         <div class="mb-4">
                             <label class="form-label fw-semibold text-secondary small">Employee PHỤC VỤ</label>
                             <div class="input-group">
@@ -42,13 +39,11 @@
                                       <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492z"/>
                                     </svg>
                                 </span>
-                                <!-- Chuyển màu text của thẻ readonly để trông tự nhiên hơn, không bị xám xịt -->
                                 <input type="text" class="form-control bg-light border-start-0 text-dark fw-medium" value="@nhanVien?.HoTen" readonly />
                             </div>
                             <small class="text-muted mt-1 d-block fst-italic">Hệ thống tự động ghi nhận Employee đang đăng nhập</small>
                         </div>
 
-                        <!-- Select: Vị trí Bàn -->
                         <div class="mb-4">
                             <label class="form-label fw-semibold text-secondary small">VỊ TRÍ BÀN</label>
                             <div class="input-group">
@@ -72,7 +67,6 @@
 
                         <hr class="text-muted my-4" />
 
-                        <!-- Nút Điều Hướng & Submit -->
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
                             <button type="submit" class="btn btn-primary px-4 shadow-sm">

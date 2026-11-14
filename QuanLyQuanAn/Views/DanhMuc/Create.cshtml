@@ -9,7 +9,6 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-lg">
                 
-                <!-- Tiêu đề (Header) -->
                 <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
@@ -28,7 +27,6 @@
                 <div class="card-body p-4">
                     <form asp-action="Create" method="post">
                         
-                        <!-- Input: Tên danh mục -->
                         <div class="mb-4">
                             <label asp-for="TenDM" class="form-label fw-semibold text-secondary small">TÊN DANH MỤC</label>
                             <div class="input-group">
@@ -43,7 +41,6 @@
                             <span asp-validation-for="TenDM" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <!-- Textarea: Mô tả -->
                         <div class="mb-4">
                             <label asp-for="MoTa" class="form-label fw-semibold text-secondary small">MÔ TẢ NGẮN GỌN</label>
                             <div class="input-group">
@@ -57,7 +54,6 @@
                             </div>
                         </div>
 
-                        <!-- Select: Trạng thái -->
                         <div class="mb-4">
                             <label asp-for="TrangThai" class="form-label fw-semibold text-secondary small">TRẠNG THÁI HOẠT ĐỘNG</label>
                             <div class="input-group">
@@ -76,7 +72,6 @@
 
                         <hr class="text-muted my-4" />
 
-                        <!-- Nút Điều Hướng & Submit -->
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
                             <button type="submit" class="btn btn-primary px-4 shadow-sm">

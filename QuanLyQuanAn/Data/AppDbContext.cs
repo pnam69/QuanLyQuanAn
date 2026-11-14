@@ -15,6 +15,7 @@ namespace QuanLyQuanAn.Data
         public DbSet<DonHang> DonHangs { get; set; }
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public DbSet<ThanhToan> ThanhToans { get; set; }
+        public DbSet<Tang> Tangs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NhanVien>()
@@ -22,8 +23,14 @@ namespace QuanLyQuanAn.Data
                 .IsUnique();
 
             modelBuilder.Entity<Ban>()
-                .HasIndex(x => x.SoBan)
+                .HasIndex(x => new { x.MaTang, x.SoBan })
                 .IsUnique();
+
+            modelBuilder.Entity<Ban>()
+                .HasOne(x => x.Tang)
+                .WithMany(x => x.Bans)
+                .HasForeignKey(x => x.MaTang)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MonAn>()
                 .Property(x => x.DonGia)

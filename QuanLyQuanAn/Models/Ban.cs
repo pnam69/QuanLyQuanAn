@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyQuanAn.Models
 {
-    [Index(nameof(SoBan), IsUnique = true)]
     public class Ban
     {
         [Key]
@@ -23,6 +21,22 @@ namespace QuanLyQuanAn.Models
         [Display(Name = "Trạng thái")]
         public string TrangThai { get; set; } = "Trống";
 
-        public ICollection<DonHang> DonHangs { get; set; } = new List<DonHang>();
+        [Display(Name = "Tầng")]
+        public int MaTang { get; set; }
+
+        [Range(1, 100)]
+        [Display(Name = "Số ghế")]
+        public int SoGhe { get; set; } = 4;
+
+        [Display(Name = "Vị trí X")]
+        public int ViTriX { get; set; } = 20;
+
+        [Display(Name = "Vị trí Y")]
+        public int ViTriY { get; set; } = 20;
+
+        public Tang? Tang { get; set; }
+
+        public ICollection<DonHang> DonHangs { get; set; }
+            = new List<DonHang>();
     }
 }

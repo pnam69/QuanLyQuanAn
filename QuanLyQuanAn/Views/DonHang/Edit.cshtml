@@ -6,7 +6,6 @@
 
 <div class="container mt-4 mb-5">
 
-    <!-- Tiêu đề trang & Trạng thái -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center">
             <div class="bg-primary bg-opacity-10 text-primary rounded p-3 me-3 shadow-sm">
@@ -30,7 +29,6 @@
             </div>
         </div>
         
-        <!-- Các nút thao tác chung -->
         <div class="d-flex gap-2">
             <a asp-action="Index" class="btn btn-light border shadow-sm px-3">
                 Quay lại
@@ -48,16 +46,13 @@
         </div>
     </div>
 
-    <!-- Layout chia cột -->
     <div class="row g-4">
         
-        <!-- Cột Trái: Bảng chi tiết món ăn -->
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-lg h-100">
                 
                 <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
                     <h5 class="fw-bold mb-0">Chi tiết món ăn</h5>
-                    <!-- Chuyển nút Thêm món lên header của bảng để trực quan hơn -->
                     <a asp-controller="ChiTietDonHang" asp-action="Create" asp-route-maDon="@Model.MaDon" class="btn btn-sm btn-primary shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -111,7 +106,6 @@
                     </div>
                 </div>
                 
-                <!-- Footer: Dòng Tổng tiền -->
                 <div class="card-footer bg-white border-top p-4 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0 text-muted fw-bold">TỔNG CỘNG</h5>
                     <h3 class="mb-0 fw-bold text-danger">@Model.TongTien.ToString("N0") đ</h3>
@@ -120,7 +114,6 @@
             </div>
         </div>
 
-        <!-- Cột Phải: Thông tin tổng quan -->
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 rounded-lg">
                 <div class="card-header bg-white border-bottom py-3">

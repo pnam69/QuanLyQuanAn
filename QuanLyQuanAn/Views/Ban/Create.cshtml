@@ -9,7 +9,6 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-lg">
                 
-                <!-- Tiêu đề Form -->
                 <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
@@ -27,7 +26,6 @@
                 <div class="card-body p-4">
                     <form asp-action="Create" method="post">
                         
-                        <!-- Input: Số Bàn -->
                         <div class="mb-4">
                             <label asp-for="SoBan" class="form-label fw-semibold text-secondary small">SỐ/TÊN BÀN</label>
                             <div class="input-group">
@@ -41,7 +39,6 @@
                             <span asp-validation-for="SoBan" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <!-- Input: Số Chỗ Ngồi -->
                         <div class="mb-4">
                             <label asp-for="SoCho" class="form-label fw-semibold text-secondary small">SỐ LƯỢNG CHỖ NGỒI</label>
                             <div class="input-group">
@@ -55,7 +52,17 @@
                             <span asp-validation-for="SoCho" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <!-- Select: Trạng Thái -->
+                        <div class="mb-4">
+                            <label asp-for="MaTang" class="form-label"></label>
+                            <select asp-for="MaTang"
+                                    asp-items="ViewBag.MaTang"
+                                    class="form-select">
+                                <option value="">-- Chọn tầng --</option>
+                            </select>
+                            <span asp-validation-for="MaTang"
+                                  class="text-danger"></span>
+                        </div>
+
                         <div class="mb-4">
                             <label asp-for="TrangThai" class="form-label fw-semibold text-secondary small">TRẠNG THÁI HIỆN TẠI</label>
                             <div class="input-group">
@@ -75,7 +82,6 @@
 
                         <hr class="text-muted my-4" />
 
-                        <!-- Nút Điều Hướng & Submit -->
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
                             <button type="submit" class="btn btn-primary px-4 shadow-sm">

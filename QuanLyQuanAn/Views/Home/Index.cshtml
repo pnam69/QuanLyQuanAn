@@ -10,7 +10,6 @@
 
 @if (!isLoggedIn)
 {
-    <!-- Giao diện khi chưa đăng nhập -->
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center py-5">
@@ -31,10 +30,8 @@
     return;
 }
 
-<!-- Giao diện Trang chủ khi đã đăng nhập -->
 <div class="container mt-4 mb-5">
     
-    <!-- Banner Chào mừng -->
     <div class="card bg-primary text-white shadow-sm border-0 rounded-lg p-4 mb-4">
         <div class="row align-items-center">
             <div class="col-md-8">
@@ -49,13 +46,11 @@
         </div>
     </div>
 
-    <!-- Khối Menu Chức năng (Dashboard Grid) -->
     <h5 class="fw-bold text-secondary mb-3 text-uppercase small tracking-wide">Danh mục quản lý</h5>
     <div class="row g-4">
 
         @if (isAdmin)
         {
-            <!-- Quản lý Employee -->
             <div class="col-md-4 col-sm-6">
                 <a asp-controller="NhanVien" asp-action="Index" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -74,7 +69,6 @@
                 </a>
             </div>
 
-            <!-- Quản lý danh mục -->
             <div class="col-md-4 col-sm-6">
                 <a asp-controller="DanhMuc" asp-action="Index" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -94,7 +88,6 @@
                 </a>
             </div>
 
-            <!-- Quản lý bàn -->
             <div class="col-md-4 col-sm-6">
                 <a asp-controller="Ban" asp-action="Index" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -113,7 +106,6 @@
                 </a>
             </div>
 
-            <!-- Thống kê -->
             <div class="col-md-4 col-sm-6">
                 <a asp-controller="ThongKe" asp-action="Index" class="text-decoration-none">
                     <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -133,7 +125,6 @@
             </div>
         }
 
-        <!-- Quản lý món ăn -->
         <div class="col-md-4 col-sm-6">
             <a asp-controller="MonAn" asp-action="Index" class="text-decoration-none">
                 <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -153,7 +144,6 @@
             </a>
         </div>
 
-        <!-- Quản lý đơn hàng -->
         <div class="col-md-4 col-sm-6">
             <a asp-controller="DonHang" asp-action="Index" class="text-decoration-none">
                 <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -172,7 +162,6 @@
             </a>
         </div>
 
-        <!-- Đăng xuất -->
         <div class="col-md-4 col-sm-6">
             <a asp-controller="Account" asp-action="Logout" class="text-decoration-none">
                 <div class="card h-100 shadow-sm border-0 rounded-lg card-hover transition-all">
@@ -195,7 +184,6 @@
     </div>
 </div>
 
-<!-- Thêm một chút CSS tùy chỉnh hiệu ứng Hover mượt mà cho các Card chức năng -->
 <style>
     .card-hover {
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

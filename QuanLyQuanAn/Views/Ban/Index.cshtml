@@ -6,7 +6,6 @@
 
 <div class="container-fluid mt-4">
 
-    <!-- Thông báo hệ thống -->
     @if (TempData["Success"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
@@ -29,14 +28,11 @@
         </div>
     }
 
-    <!-- Khối nội dung chính -->
     <div class="card shadow-sm border-0 rounded-lg">
 
-        <!-- Header Card: Tiêu đề & Thanh công cụ -->
         <div class="card-header bg-white border-bottom py-3 px-4">
             <div class="row align-items-center">
 
-                <!-- Tiêu đề -->
                 <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
                     <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
@@ -46,22 +42,36 @@
                     <h4 class="fw-bold mb-0">Quản Lý Bàn</h4>
                 </div>
 
-                <!-- Tìm kiếm & Nút thêm mới -->
                 <div class="col-md-8 text-md-end">
-                    <form method="get" class="d-flex justify-content-md-end align-items-center gap-2">
+                    <form method="get" class="d-flex justify-content-md-end align-items-center gap-2 flex-wrap">
+
+                        <select name="maTang"
+                                asp-items="ViewBag.Tangs"
+                                class="form-select shadow-sm"
+                                style="max-width: 150px;"
+                                onchange="this.form.submit()">
+                        </select>
+
                         <div class="input-group shadow-sm" style="max-width: 300px;">
-                            <input type="text" name="search" value="@ViewBag.Search" class="form-control bg-light border-end-0" placeholder="Nhập số/tên bàn..." />
-                            <button type="submit" class="btn btn-light border border-start-0 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <input type="text"
+                                   name="search"
+                                   value="@ViewBag.Search"
+                                   class="form-control bg-light border-end-0"
+                                   placeholder="Nhập số bàn..." />
+
+                            <button type="submit"
+                                    class="btn btn-light border border-start-0 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="16" height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                 </svg>
                             </button>
                         </div>
 
-                        <a asp-action="Create" class="btn btn-primary shadow-sm text-nowrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                            </svg>
+                        <a asp-action="Create"
+                           class="btn btn-primary shadow-sm text-nowrap">
                             Thêm bàn mới
                         </a>
                     </form>
@@ -70,7 +80,225 @@
             </div>
         </div>
 
-        <!-- Bảng Dữ Liệu -->
+        @{
+            var banList = Model?.ToList() ?? new List<Ban>();
+
+            // Newly created tables may all have the default position (20,20).
+            // Arrange them visually until the administrator saves their layout.
+            bool useAutoLayout = banList.Count > 1 &&
+                banList.Select(x => new { x.ViTriX, x.ViTriY })
+                    .Distinct()
+                    .Count() == 1;
+        }
+
+        <div class="card-body border-bottom">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+
+                <div>
+                    <h5 class="fw-bold mb-1">Sơ đồ bàn</h5>
+                    <small class="text-muted">
+                        Kéo bàn để thay đổi vị trí khi bật chế độ chỉnh sửa.
+                    </small>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="button"
+                            id="btnEditLayout"
+                            class="btn btn-outline-primary btn-sm">
+                        Chỉnh sửa sơ đồ
+                    </button>
+
+                    <button type="button"
+                            id="btnSaveLayout"
+                            class="btn btn-success btn-sm"
+                            disabled
+                            style="display:none;">
+                        Lưu vị trí
+                    </button>
+
+                    <button type="button"
+                            id="btnCancelLayout"
+                            class="btn btn-outline-secondary btn-sm"
+                            disabled
+                            style="display:none;">
+                        Hủy
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mb-3 small">
+                <span>
+                    <span class="d-inline-block rounded-circle bg-success me-1"
+                          style="width:10px;height:10px;"></span>
+                    Trống
+                </span>
+
+                <span>
+                    <span class="d-inline-block rounded-circle bg-warning me-1"
+                          style="width:10px;height:10px;"></span>
+                    Đã đặt
+                </span>
+
+                <span>
+                    <span class="d-inline-block rounded-circle bg-danger me-1"
+                          style="width:10px;height:10px;"></span>
+                    Đang phục vụ
+                </span>
+            </div>
+
+            
+            @Html.AntiForgeryToken()
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <button type="button" id="btnZoomOut" class="btn btn-outline-secondary btn-sm" title="Thu nhỏ">−</button>
+                    <span id="zoomLevel" class="small text-muted" style="min-width:48px;text-align:center;">100%</span>
+                    <button type="button" id="btnZoomIn" class="btn btn-outline-secondary btn-sm" title="Phóng to">+</button>
+                    <button type="button" id="btnZoomFit" class="btn btn-outline-secondary btn-sm">Vừa màn hình</button>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 small align-items-center">
+                    <span><span class="map-status-dot bg-success"></span> Trống</span>
+                    <span><span class="map-status-dot bg-warning"></span> Đã đặt</span>
+                    <span><span class="map-status-dot bg-danger"></span> Đang phục vụ</span>
+                    <span><span class="map-status-dot bg-secondary"></span> Khác</span>
+                </div>
+            </div>
+            <div class="map-editor-toolbar d-flex flex-wrap align-items-center gap-2 mb-3">
+                <span class="small fw-semibold me-1">Thêm vào sơ đồ:</span>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="counter">Quầy thu ngân</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="window">Cửa sổ</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="door">Cửa ra vào</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="partition">Vách ngăn</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="plant">Chậu cây</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-add-object="decoration">Trang trí</button>
+
+                <button type="button" class="btn btn-outline-danger btn-sm ms-auto"
+                        id="btnDeleteMapObject" disabled>
+                    Xóa đối tượng
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        id="btnResetMapObjects">
+                    Đặt lại nội thất
+                </button>
+            </div>
+            <div class="table-map-wrapper">
+                <div id="tableMap"
+                     class="table-map"
+                     data-floor-id="@Context.Request.Query["maTang"]"
+                     data-save-positions-url="@Url.Action("SavePositions", "Ban")"
+                     data-open-table-url="@Url.Action("OpenTable", "Ban")"
+                     data-load-objects-url="@Url.Action("GetMapObjects", "Ban")"
+                     data-save-objects-url="@Url.Action("SaveMapObjects", "Ban")">
+
+                    <div class="map-wall map-wall-top"></div>
+                    <div class="map-wall map-wall-right"></div>
+                    <div class="map-wall map-wall-bottom"></div>
+                    <div class="map-wall map-wall-left"></div>
+
+                    <div id="mapEnvironment" class="map-environment"></div>
+
+                    @for (var i = 0; i < banList.Count; i++)
+                    {
+                        var ban = banList[i];
+
+                        var x = useAutoLayout
+                            ? 8 + ((i % 5) * 17)
+                            : ban.ViTriX;
+
+                        var y = useAutoLayout
+                            ? 12 + ((i / 5) * 22)
+                            : ban.ViTriY;
+
+                        <button type="button"
+                            class="map-table"
+                            data-id="@ban.MaBan"
+                            data-name="@ban.SoBan"
+                            data-capacity="@ban.SoCho"
+                            data-status="@ban.TrangThai"
+                            data-x="@x"
+                            data-y="@y">
+
+                            <span class="map-table-number">@ban.SoBan</span>
+                            <span class="map-table-status">@ban.TrangThai</span>
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div id="mapObjectProperties" class="map-object-properties mt-3" hidden>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <strong id="mapObjectTitle">Đối tượng được chọn</strong>
+                    <span class="small text-muted">Có thể kéo trực tiếp trên sơ đồ</span>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-6 col-md-2">
+                        <label class="form-label small">Vị trí X (%)</label>
+                        <input type="number" id="objectX" class="form-control form-control-sm"
+                               min="0" max="100" step="0.5">
+                    </div>
+
+                    <div class="col-6 col-md-2">
+                        <label class="form-label small">Vị trí Y (%)</label>
+                        <input type="number" id="objectY" class="form-control form-control-sm"
+                               min="0" max="100" step="0.5">
+                    </div>
+
+                    <div class="col-6 col-md-2">
+                        <label class="form-label small">Chiều rộng (%)</label>
+                        <input type="number" id="objectWidth" class="form-control form-control-sm"
+                               min="2" max="100" step="0.5">
+                    </div>
+
+                    <div class="col-6 col-md-2">
+                        <label class="form-label small">Chiều cao (%)</label>
+                        <input type="number" id="objectHeight" class="form-control form-control-sm"
+                               min="2" max="100" step="0.5">
+                    </div>
+
+                    <div class="col-6 col-md-2">
+                        <label class="form-label small">Góc xoay</label>
+                        <input type="number" id="objectRotation" class="form-control form-control-sm"
+                               min="0" max="359" step="15">
+                    </div>
+                </div>
+            </div>
+
+            <div id="mapMessage" class="small mt-2" aria-live="polite"></div>
+
+            <div id="tableInfo" class="border rounded p-3 mt-3" hidden>
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                    <div>
+                        <div class="text-muted small">Thông tin bàn được chọn</div>
+                        <h6 id="selectedTableName" class="fw-bold mb-1">—</h6>
+                        <div class="small text-muted">
+                            Sức chứa: <strong id="selectedTableCapacity">—</strong>
+                            <span class="mx-2">|</span>
+                            Trạng thái: <strong id="selectedTableStatus">—</strong>
+                        </div>
+                    </div>
+                    <a id="btnOpenSelectedTable" class="btn btn-primary btn-sm" href="#">
+                        Mở bàn
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -125,7 +353,6 @@
                         }
                         else
                         {
-                            <!-- Giao diện khi không có dữ liệu -->
                             <tr>
                                 <td colspan="5" class="text-center py-5">
                                     <div class="text-muted">
@@ -143,3 +370,14 @@
         </div>
     </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/ban-map.css"
+          asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/ban-map.js"
+            asp-append-version="true"></script>
+}

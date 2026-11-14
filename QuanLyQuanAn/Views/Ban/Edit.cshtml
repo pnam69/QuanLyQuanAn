@@ -9,11 +9,9 @@
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-lg">
                 
-                <!-- Tiêu đề Form -->
                 <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
-                            <!-- Icon Edit/Pencil -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -29,10 +27,8 @@
                 <div class="card-body p-4">
                     <form asp-action="Edit" method="post">
                         
-                        <!-- Trường ẩn chứa Mã Bàn để submit -->
                         <input type="hidden" asp-for="MaBan" />
                         
-                        <!-- Input: Số Bàn -->
                         <div class="mb-4">
                             <label asp-for="SoBan" class="form-label fw-semibold text-secondary small">SỐ/TÊN BÀN</label>
                             <div class="input-group">
@@ -46,7 +42,6 @@
                             <span asp-validation-for="SoBan" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <!-- Input: Số Chỗ Ngồi -->
                         <div class="mb-4">
                             <label asp-for="SoCho" class="form-label fw-semibold text-secondary small">SỐ LƯỢNG CHỖ NGỒI</label>
                             <div class="input-group">
@@ -60,7 +55,17 @@
                             <span asp-validation-for="SoCho" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <!-- Select: Trạng Thái -->
+                        <div class="mb-4">
+                            <label asp-for="MaTang" class="form-label"></label>
+                            <select asp-for="MaTang"
+                                    asp-items="ViewBag.MaTang"
+                                    class="form-select">
+                                <option value="">-- Chọn tầng --</option>
+                            </select>
+                            <span asp-validation-for="MaTang"
+                                  class="text-danger"></span>
+                        </div>
+                        
                         <div class="mb-4">
                             <label asp-for="TrangThai" class="form-label fw-semibold text-secondary small">TRẠNG THÁI HIỆN TẠI</label>
                             <div class="input-group">
@@ -80,7 +85,6 @@
 
                         <hr class="text-muted my-4" />
 
-                        <!-- Nút Điều Hướng & Submit -->
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
                             <button type="submit" class="btn btn-primary px-4 shadow-sm">

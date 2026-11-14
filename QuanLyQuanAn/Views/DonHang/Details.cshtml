@@ -6,7 +6,6 @@
 
 <div class="container mt-4 mb-5">
 
-    <!-- Cảnh báo lỗi -->
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
@@ -18,7 +17,6 @@
         </div>
     }
 
-    <!-- Tiêu đề trang & Trạng thái -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center">
             <div class="bg-primary bg-opacity-10 text-primary rounded p-3 me-3 shadow-sm">
@@ -42,7 +40,6 @@
             </div>
         </div>
         
-        <!-- Các nút thao tác trên cùng -->
         <div class="d-flex gap-2">
             <a asp-action="Index" class="btn btn-light border shadow-sm px-3">
                 Quay lại
@@ -60,10 +57,8 @@
         </div>
     </div>
 
-    <!-- Hàng chứa Thông tin chung & Bảng món ăn -->
     <div class="row g-4">
         
-        <!-- Cột trái: Bảng món ăn -->
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-lg h-100">
                 <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
@@ -144,10 +139,8 @@
             </div>
         </div>
 
-        <!-- Cột phải: Thông tin tổng quan & Thanh toán -->
         <div class="col-lg-4">
             
-            <!-- Card Thông tin đơn hàng -->
             <div class="card shadow-sm border-0 rounded-lg mb-4">
                 <div class="card-header bg-white border-bottom py-3">
                     <h5 class="fw-bold mb-0">Thông tin chung</h5>
@@ -170,7 +163,6 @@
                 </div>
             </div>
 
-            <!-- Card Thông tin thanh toán (Chỉ hiện khi đã thanh toán) -->
             @if (Model.ThanhToan != null)
             {
                 <div class="card shadow-sm border-0 border-top border-success border-4 rounded-lg">
