@@ -12,15 +12,15 @@ using QuanLyQuanAn.Data;
 namespace QuanLyQuanAn.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260907081044_MakeSoBanUnique")]
-    partial class MakeSoBanUnique
+    [Migration("20261116160032_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.11")
+                .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,6 +33,9 @@ namespace QuanLyQuanAn.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaBan"));
 
+                    b.Property<int>("MaTang")
+                        .HasColumnType("int");
+
                     b.Property<string>("SoBan")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -41,14 +44,23 @@ namespace QuanLyQuanAn.Migrations
                     b.Property<int>("SoCho")
                         .HasColumnType("int");
 
+                    b.Property<int>("SoGhe")
+                        .HasColumnType("int");
+
                     b.Property<string>("TrangThai")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("ViTriX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViTriY")
+                        .HasColumnType("int");
+
                     b.HasKey("MaBan");
 
-                    b.HasIndex("SoBan")
+                    b.HasIndex("MaTang", "SoBan")
                         .IsUnique();
 
                     b.ToTable("Bans");
@@ -105,10 +117,14 @@ namespace QuanLyQuanAn.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaDM");
+
+                    b.HasIndex("MaDM")
+                        .IsUnique();
 
                     b.ToTable("DanhMucs");
                 });
@@ -143,9 +159,53 @@ namespace QuanLyQuanAn.Migrations
 
                     b.HasIndex("MaBan");
 
+                    b.HasIndex("MaDon")
+                        .IsUnique();
+
                     b.HasIndex("MaNV");
 
                     b.ToTable("DonHangs");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.MapObject", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("MaTang")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Rotation")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.Property<double>("X")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Y")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaTang");
+
+                    b.ToTable("MapObjects");
                 });
 
             modelBuilder.Entity("QuanLyQuanAn.Models.MonAn", b =>
@@ -172,12 +232,16 @@ namespace QuanLyQuanAn.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaMon");
 
                     b.HasIndex("MaDM");
+
+                    b.HasIndex("MaMon")
+                        .IsUnique();
 
                     b.ToTable("MonAns");
                 });
@@ -214,8 +278,9 @@ namespace QuanLyQuanAn.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VaiTro")
                         .IsRequired()
@@ -224,10 +289,66 @@ namespace QuanLyQuanAn.Migrations
 
                     b.HasKey("MaNV");
 
+                    b.HasIndex("MaNV")
+                        .IsUnique();
+
                     b.HasIndex("TaiKhoan")
                         .IsUnique();
 
                     b.ToTable("NhanViens");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.PasswordResetToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaNV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaNV");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.ToTable("PasswordResetTokens");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.Tang", b =>
+                {
+                    b.Property<int>("MaTang")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaTang"));
+
+                    b.Property<string>("TenTang")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("MaTang");
+
+                    b.ToTable("Tangs");
                 });
 
             modelBuilder.Entity("QuanLyQuanAn.Models.ThanhToan", b =>
@@ -264,6 +385,17 @@ namespace QuanLyQuanAn.Migrations
                         .IsUnique();
 
                     b.ToTable("ThanhToans");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.Ban", b =>
+                {
+                    b.HasOne("QuanLyQuanAn.Models.Tang", "Tang")
+                        .WithMany("Bans")
+                        .HasForeignKey("MaTang")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tang");
                 });
 
             modelBuilder.Entity("QuanLyQuanAn.Models.ChiTietDonHang", b =>
@@ -304,6 +436,17 @@ namespace QuanLyQuanAn.Migrations
                     b.Navigation("NhanVien");
                 });
 
+            modelBuilder.Entity("QuanLyQuanAn.Models.MapObject", b =>
+                {
+                    b.HasOne("QuanLyQuanAn.Models.Tang", "Tang")
+                        .WithMany()
+                        .HasForeignKey("MaTang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tang");
+                });
+
             modelBuilder.Entity("QuanLyQuanAn.Models.MonAn", b =>
                 {
                     b.HasOne("QuanLyQuanAn.Models.DanhMuc", "DanhMuc")
@@ -313,6 +456,17 @@ namespace QuanLyQuanAn.Migrations
                         .IsRequired();
 
                     b.Navigation("DanhMuc");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.PasswordResetToken", b =>
+                {
+                    b.HasOne("QuanLyQuanAn.Models.NhanVien", "NhanVien")
+                        .WithMany()
+                        .HasForeignKey("MaNV")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NhanVien");
                 });
 
             modelBuilder.Entity("QuanLyQuanAn.Models.ThanhToan", b =>
@@ -346,6 +500,11 @@ namespace QuanLyQuanAn.Migrations
             modelBuilder.Entity("QuanLyQuanAn.Models.NhanVien", b =>
                 {
                     b.Navigation("DonHangs");
+                });
+
+            modelBuilder.Entity("QuanLyQuanAn.Models.Tang", b =>
+                {
+                    b.Navigation("Bans");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,9 +29,9 @@ namespace QuanLyQuanAn.Models
         [Display(Name = "Tài khoản")]
         public string TaiKhoan { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [StringLength(100)]
         [Display(Name = "Mật khẩu")]
+
         public string MatKhau { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Vui lòng chọn vai trò")]

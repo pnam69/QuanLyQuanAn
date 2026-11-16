@@ -350,6 +350,146 @@ namespace QuanLyQuanAn.Controllers
                 message = "Đã lưu sơ đồ bàn."
             });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMapObjects(int maTang)
+        {
+            var tangExists = await _context.Tangs
+                .AnyAsync(x => x.MaTang == maTang);
+
+            if (!tangExists)
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Tầng không tồn tại."
+                });
+            }
+
+            var objects = await _context.MapObjects
+                .Where(x => x.MaTang == maTang)
+                .Select(x => new
+                {
+                    id = x.Id,
+                    type = x.Type,
+                    label = x.Label,
+                    x = x.X,
+                    y = x.Y,
+                    width = x.Width,
+                    height = x.Height,
+                    rotation = x.Rotation
+                })
+                .ToListAsync();
+
+            return Json(objects);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveMapObjects(
+            [FromBody] MapObjectsSaveRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Dữ liệu không hợp lệ."
+                });
+            }
+
+            var tangExists = await _context.Tangs
+                .AnyAsync(x => x.MaTang == request.MaTang);
+
+            if (!tangExists)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Tầng không tồn tại."
+                });
+            }
+
+            if (request.Objects == null)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Danh sách nội thất không hợp lệ."
+                });
+            }
+
+            var allowedTypes = new[]
+            {
+        "counter",
+        "window",
+        "door",
+        "partition",
+        "plant",
+        "decoration"
+    };
+
+            if (request.Objects.Any(x =>
+                string.IsNullOrWhiteSpace(x.Id) ||
+                x.Id.Length > 100 ||
+                !allowedTypes.Contains(x.Type) ||
+                x.X < 0 || x.X > 100 ||
+                x.Y < 0 || x.Y > 100 ||
+                x.Width < 2 || x.Width > 100 ||
+                x.Height < 2 || x.Height > 100 ||
+                x.Rotation < 0 || x.Rotation > 359 ||
+                double.IsNaN(x.X) || double.IsInfinity(x.X) ||
+                double.IsNaN(x.Y) || double.IsInfinity(x.Y) ||
+                double.IsNaN(x.Width) || double.IsInfinity(x.Width) ||
+                double.IsNaN(x.Height) || double.IsInfinity(x.Height) ||
+                double.IsNaN(x.Rotation) || double.IsInfinity(x.Rotation)))
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Thông tin nội thất không hợp lệ."
+                });
+            }
+
+            if (request.Objects.Select(x => x.Id).Distinct().Count()
+                != request.Objects.Count)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "ID nội thất bị trùng."
+                });
+            }
+
+            var existingObjects = await _context.MapObjects
+                .Where(x => x.MaTang == request.MaTang)
+                .ToListAsync();
+
+            _context.MapObjects.RemoveRange(existingObjects);
+
+            var newObjects = request.Objects.Select(x => new MapObject
+            {
+                Id = x.Id,
+                MaTang = request.MaTang,
+                Type = x.Type,
+                Label = x.Label ?? string.Empty,
+                X = x.X,
+                Y = x.Y,
+                Width = x.Width,
+                Height = x.Height,
+                Rotation = x.Rotation
+            }).ToList();
+
+            await _context.MapObjects.AddRangeAsync(newObjects);
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                success = true,
+                message = "Đã lưu nội thất thành công."
+            });
+        }
+
         private async Task LoadTangDropdown(int? selectedTang = null)
         {
             var tangs = await _context.Tangs
@@ -367,6 +507,26 @@ namespace QuanLyQuanAn.Controllers
         {
             return _context.Bans.Any(x => x.MaBan == id);
         }
+
+
+        public class MapObjectsSaveRequest
+        {
+            public int MaTang { get; set; }
+            public List<MapObjectUpdate> Objects { get; set; } = new();
+        }
+
+        public class MapObjectUpdate
+        {
+            public string Id { get; set; } = string.Empty;
+            public string Type { get; set; } = string.Empty;
+            public string Label { get; set; } = string.Empty;
+            public double X { get; set; }
+            public double Y { get; set; }
+            public double Width { get; set; }
+            public double Height { get; set; }
+            public double Rotation { get; set; }
+        }
+
     }
     public class BanPositionUpdate
     {

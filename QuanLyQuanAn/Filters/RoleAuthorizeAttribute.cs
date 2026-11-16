@@ -17,11 +17,9 @@ namespace QuanLyQuanAn.Filters
         {
             var httpContext = context.HttpContext;
 
-            var maNV = httpContext.Session.GetInt32("MaNV");
-            var vaiTro = httpContext.Session.GetString("VaiTro");
+            var user = httpContext.User;
 
-            // Chưa đăng nhập
-            if (maNV == null)
+            if (user.Identity?.IsAuthenticated != true)
             {
                 context.Result = new RedirectToActionResult(
                     "Login",
@@ -31,7 +29,13 @@ namespace QuanLyQuanAn.Filters
                 return;
             }
 
-            // Không có quyền
+            var vaiTro = user.FindFirst("VaiTro")?.Value;
+
+            if (string.IsNullOrEmpty(vaiTro))
+            {
+                vaiTro = httpContext.Session.GetString("VaiTro");
+            }
+
             if (_roles.Length > 0 &&
                 (vaiTro == null || !_roles.Contains(vaiTro)))
             {

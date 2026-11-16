@@ -16,6 +16,8 @@ namespace QuanLyQuanAn.Data
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public DbSet<ThanhToan> ThanhToans { get; set; }
         public DbSet<Tang> Tangs { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+        public DbSet<MapObject> MapObjects { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NhanVien>()
@@ -87,6 +89,22 @@ namespace QuanLyQuanAn.Data
                 .WithOne(x => x.ThanhToan)
                 .HasForeignKey<ThanhToan>(x => x.MaDon)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PasswordResetToken>()
+                .HasIndex(x => x.TokenHash)
+                .IsUnique();
+
+            modelBuilder.Entity<PasswordResetToken>()
+                .HasOne(x => x.NhanVien)
+                .WithMany()
+                .HasForeignKey(x => x.MaNV)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MapObject>()
+                .HasOne(x => x.Tang)
+                .WithMany()
+                .HasForeignKey(x => x.MaTang)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

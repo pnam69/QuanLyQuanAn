@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Xác nhận mã";
+}
+
+<div class="container mt-5" style="max-width: 450px;">
+    <h3 class="mb-3">Xác nhận mã email</h3>
+
+    <p>Nhập mã 6 chữ số đã được gửi đến email của bạn.</p>
+
+    <form asp-action="VerifyCode" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label class="form-label">Mã xác nhận</label>
+            <input type="text"
+                   name="code"
+                   class="form-control"
+                   maxlength="6"
+                   minlength="6"
+                   pattern="[0-9]{6}"
+                   inputmode="numeric"
+                   autocomplete="one-time-code"
+                   required />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Xác nhận
+        </button>
+    </form>
+
+    <div class="mt-3">
+        <a asp-action="ForgotPassword">Yêu cầu mã mới</a>
+    </div>
+</div>

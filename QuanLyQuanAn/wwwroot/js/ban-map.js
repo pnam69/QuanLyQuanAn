@@ -626,7 +626,7 @@
                 "RequestVerificationToken": token || ""
             },
             body: JSON.stringify({
-                maTang: getFloorId(),
+                maTang: Number(getFloorId()),
                 objects: objectItems
             })
         });
@@ -651,8 +651,8 @@
 
         const positions = [...map.querySelectorAll(".map-table")].map(table => ({
             maBan: Number(table.dataset.id),
-            x: Number(table.dataset.x),
-            y: Number(table.dataset.y)
+            viTriX: Math.round(Number(table.dataset.x)),
+            viTriY: Math.round(Number(table.dataset.y))
         }));
 
         const separator = url.includes("?") ? "&" : "?";

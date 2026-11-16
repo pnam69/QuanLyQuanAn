@@ -5,69 +5,156 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-5">
-            
-            <div class="card shadow-lg border-0 rounded-lg mt-4">
+            <div class="card shadow-lg border-0 rounded-4 mt-4">
                 <div class="card-body p-4 p-md-5">
-                    
+
                     <div class="text-center mb-4">
                         <div class="mb-3 text-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
-                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zM4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="56" height="56"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.375 2.375 0 0 1-4.25-1.458V5.37a1.5 1.5 0 0 1 .361-.976zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1z" />
                             </svg>
                         </div>
-                        <h3 class="fw-bold text-uppercase mb-1">Quản Lý Quán Ăn</h3>
-                        <p class="text-muted">Đăng nhập để vào hệ thống</p>
+
+                        <h3 class="fw-bold text-uppercase mb-1">
+                            Quản Lý Quán Ăn
+                        </h3>
+
+                        <p class="text-muted">
+                            Đăng nhập để vào hệ thống
+                        </p>
                     </div>
 
-                    <form asp-action="Login" method="post">
-                        
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 mb-4 rounded" role="alert"></div>
+                    <form asp-action="Login"
+                          method="post">
 
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold text-secondary small">TÀI KHOẢN</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person text-muted" viewBox="0 0 16 16">
-                                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.5c0-.175-.243-.75-1.928-1.155C10.843 11.32 9.4 11 8 11s-2.843.32-4.072.845C2.243 12.25 2 12.825 2 13s.2.5 1 .5h10c.8 0 1-.3 1-.5"/>
-                                    </svg>
-                                </span>
-                                <input type="text" name="TaiKhoan" class="form-control form-control-lg bg-light border-start-0 px-2" placeholder="Nhập username..." autocomplete="username" />
-                            </div>
-                            <span class="text-danger small mt-1 d-block">
-                                @Html.ValidationMessage("TaiKhoan")
-                            </span>
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@ViewBag.ReturnUrl" />
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger p-2 mb-4 rounded"
+                             role="alert">
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-secondary small">MẬT KHẨU</label>
+                            <label class="form-label fw-semibold text-secondary small">
+                                TÀI KHOẢN / EMAIL
+                            </label>
+
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-lock text-muted" viewBox="0 0 16 16">
-                                      <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
-                                    </svg>
+                                    <i class="bi bi-person"></i>
                                 </span>
-                                <input type="password" name="MatKhau" class="form-control form-control-lg bg-light border-start-0 px-2" placeholder="Nhập mật khẩu..." autocomplete="current-password" />
+
+                                <input type="text"
+                                       name="TaiKhoan"
+                                       class="form-control form-control-lg bg-light border-start-0"
+                                       placeholder="Nhập username hoặc email..."
+                                       autocomplete="username"
+                                       required />
                             </div>
-                            <span class="text-danger small mt-1 d-block">
-                                @Html.ValidationMessage("MatKhau")
-                            </span>
+
+                            @Html.ValidationMessage(
+                                "TaiKhoan",
+                                null,
+                                new { @class = "text-danger small" })
                         </div>
 
-                        <div class="d-grid gap-2 mt-5">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm py-2">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary small">
+                                MẬT KHẨU
+                            </label>
+
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+
+                                <input type="password"
+                                       name="MatKhau"
+                                       id="MatKhau"
+                                       class="form-control form-control-lg bg-light border-start-0"
+                                       placeholder="Nhập mật khẩu..."
+                                       autocomplete="current-password"
+                                       required />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        id="togglePassword"
+                                        aria-label="Hiện mật khẩu">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            @Html.ValidationMessage(
+                                "MatKhau",
+                                null,
+                                new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="RememberMe"
+                                       value="true"
+                                       id="RememberMe" />
+
+                                <label class="form-check-label small"
+                                       for="RememberMe">
+                                    Ghi nhớ đăng nhập
+                                </label>
+                            </div>
+
+                            <a asp-action="ForgotPassword"
+                               class="text-decoration-none small">
+                                Quên mật khẩu?
+                            </a>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg fw-bold shadow-sm py-2">
                                 ĐĂNG NHẬP
                             </button>
                         </div>
-                        
-                    </form>
 
+                    </form>
                 </div>
             </div>
-            
-            <div class="text-center mt-3">
-                <p class="text-muted small">&copy; 2026 Hệ thống Quản lý Quán ăn</p>
-            </div>
 
+            <div class="text-center mt-3">
+                <p class="text-muted small">
+                    &copy; 2026 Hệ thống Quản lý Quán ăn
+                </p>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("MatKhau");
+
+        togglePassword.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+
+            this.innerHTML = isPassword
+                ? '<i class="bi bi-eye-slash"></i>'
+                : '<i class="bi bi-eye"></i>';
+
+            this.setAttribute(
+                "aria-label",
+                isPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
+            );
+        });
+    </script>
+}

@@ -1,2 +1,0 @@
-E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\wwwroot\css\ban-map-editor.css
-E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\wwwroot\js\ban-map-editor.js
