@@ -534,5 +534,5 @@ C:\Users\ffhun\source\repos\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\QuanLyQu
 C:\Users\ffhun\source\repos\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\QuanLyQuanAn.genruntimeconfig.cache
 C:\Users\ffhun\source\repos\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\ref\QuanLyQuanAn.dll
 E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\bin\Debug\net10.0\QuestPDF.Fonts.Lato.br
-E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\compressed\9bfunsr4y1-{0}-az2ibrzm3b-az2ibrzm3b.gz
-E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\compressed\q9ku20tsa9-{0}-0674bpc72x-0674bpc72x.gz
+E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\compressed\9bfunsr4y1-{0}-bpyfn1pyvp-bpyfn1pyvp.gz
+E:\1_PRN211\QuanLyQuanAn\QuanLyQuanAn\obj\Debug\net10.0\compressed\q9ku20tsa9-{0}-zx6m851b9i-zx6m851b9i.gz

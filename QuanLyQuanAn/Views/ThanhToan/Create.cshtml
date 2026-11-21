@@ -49,7 +49,9 @@
                             </li>
                             <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
                                 <span class="text-muted">Vị trí</span>
-                                <span class="fw-semibold">Bàn @donHang?.Ban?.SoBan</span>
+                                <span class="fw-semibold">
+                                    @(donHang?.Ban?.SoBan ?? "Takeaway")
+                                </span>
                             </li>
                             <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 pb-0">
                                 <span class="text-muted">Tổng tiền thanh toán</span>
@@ -60,7 +62,8 @@
 
                     <!-- Form Thanh Toán -->
                     <form asp-action="Create" method="post">
-                        
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                         <input type="hidden" name="MaDon" value="@donHang?.MaDon" />
 
                         <!-- Select: Phương thức thanh toán -->
@@ -75,7 +78,7 @@
                                 <select name="PhuongThuc" class="form-select bg-light border-start-0" required>
                                     <option value="" selected disabled>-- Chọn phương thức thanh toán --</option>
                                     <option value="Tiền mặt">Tiền mặt</option>
-                                    <option value="Chuyển khoản">Chuyển khoản ngân hàng</option>
+                                    <option value="Chuyển khoản BIDV">Chuyển khoản BIDV</option>
                                 </select>
                             </div>
                         </div>

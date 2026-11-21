@@ -49,9 +49,10 @@ namespace QuanLyQuanAn.Data
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<DonHang>()
-                .HasOne(x => x.Ban)
-                .WithMany(x => x.DonHangs)
-                .HasForeignKey(x => x.MaBan)
+                .HasOne(d => d.Ban)
+                .WithMany(b => b.DonHangs)
+                .HasForeignKey(d => d.MaBan)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<DonHang>()
@@ -84,11 +85,20 @@ namespace QuanLyQuanAn.Data
                 .Property(x => x.SoTien)
                 .HasPrecision(18, 2);
 
+            // Disable SQL OUTPUT clause for tables with database triggers
+            modelBuilder.Entity<ChiTietDonHang>()
+                .ToTable(table => table.UseSqlOutputClause(false));
+
+            modelBuilder.Entity<ThanhToan>()
+                .ToTable(table => table.UseSqlOutputClause(false));
+
+
             modelBuilder.Entity<ThanhToan>()
                 .HasOne(x => x.DonHang)
                 .WithOne(x => x.ThanhToan)
                 .HasForeignKey<ThanhToan>(x => x.MaDon)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<PasswordResetToken>()
                 .HasIndex(x => x.TokenHash)

@@ -3,13 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyQuanAn.Models
 {
-    [Index(nameof(MaDon), IsUnique = true)]
     public class DonHang
     {
         [Key]
         public int MaDon { get; set; }
 
-        public int MaBan { get; set; }
+        public int? MaBan { get; set; }
 
         public int MaNV { get; set; }
 

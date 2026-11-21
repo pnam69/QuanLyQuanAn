@@ -95,6 +95,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/CreateTakeaway.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xDcmVhdGVUYWtlYXdheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/DonHang/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -153,6 +157,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/ThanhToan/BankQr.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhhbmhUb2FuXEJhbmtRci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/1_PRN211/QuanLyQuanAn/QuanLyQuanAn/Views/ThanhToan/Create.cshtml]

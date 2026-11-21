@@ -44,7 +44,7 @@
             <a asp-action="Index" class="btn btn-light border shadow-sm px-3">
                 Quay lại
             </a>
-            @if (Model.TrangThai != "Đã thanh toán")
+            @if (Model.TrangThai != "Đã thanh toán" && Model.ThanhToan == null)
             {
                 <a asp-controller="ThanhToan" asp-action="Create" asp-route-maDon="@Model.MaDon" class="btn btn-success shadow-sm px-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack me-1 mb-1" viewBox="0 0 16 16">
@@ -63,7 +63,7 @@
             <div class="card shadow-sm border-0 rounded-lg h-100">
                 <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
                     <h5 class="fw-bold mb-0">Chi tiết món ăn</h5>
-                    @if (Model.TrangThai != "Đã thanh toán")
+                    @if (Model.TrangThai != "Đã thanh toán" && Model.ThanhToan == null)
                     {
                         <a asp-controller="ChiTietDonHang" asp-action="Create" asp-route-maDon="@Model.MaDon" class="btn btn-sm btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
@@ -97,7 +97,7 @@
                                             <td class="text-center"><span class="badge bg-light text-dark border px-2 py-1 fs-6">@item.SoLuong</span></td>
                                             <td class="fw-bold text-primary">@item.ThanhTien.ToString("N0") đ</td>
                                             <td class="text-end pe-4">
-                                                @if (Model.TrangThai != "Đã thanh toán")
+                                                @if (Model.TrangThai != "Đã thanh toán" && Model.ThanhToan == null)
                                                 {
                                                     <form asp-controller="ChiTietDonHang" asp-action="Delete" method="post" class="d-inline m-0" onsubmit="return confirm('Bạn có chắc muốn xóa món này khỏi hóa đơn?');">
                                                         <input type="hidden" name="id" value="@item.MaChiTiet" />
@@ -149,7 +149,9 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0 pt-0">
                             <span class="text-muted">Vị trí</span>
-                            <span class="fw-bold">Bàn @Model.Ban?.SoBan</span>
+                            <span class="fw-bold">
+                                @(Model.Ban?.SoBan ?? "Takeaway")
+                            </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             <span class="text-muted">Employee</span>

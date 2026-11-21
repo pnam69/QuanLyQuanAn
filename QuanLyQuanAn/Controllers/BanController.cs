@@ -95,7 +95,7 @@ namespace QuanLyQuanAn.Controllers
                 await LoadTangDropdown(ban.MaTang);
                 return View(ban);
             }
-
+            ban.TrangThai = "Trống";
             _context.Bans.Add(ban);
 
             await _context.SaveChangesAsync();
@@ -170,7 +170,6 @@ namespace QuanLyQuanAn.Controllers
 
             existingBan.SoBan = ban.SoBan;
             existingBan.SoCho = ban.SoCho;
-            existingBan.TrangThai = ban.TrangThai;
             existingBan.MaTang = ban.MaTang;
             existingBan.SoGhe = ban.SoGhe;
             existingBan.ViTriX = ban.ViTriX;
@@ -255,6 +254,7 @@ namespace QuanLyQuanAn.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         [HttpGet]
         public async Task<IActionResult> OpenTable(int id)
         {
@@ -266,29 +266,38 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
-            var maDon = await _context.DonHangs
+            var activeOrders = await _context.DonHangs
                 .Where(x =>
                     x.MaBan == id &&
-                    x.TrangThai == "Đang phục vụ")
+                    x.TrangThai == "Đang phục vụ" &&
+                    x.ThanhToan == null)
                 .OrderByDescending(x => x.NgayLap)
-                .Select(x => (int?)x.MaDon)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
-            if (maDon.HasValue)
+            if (activeOrders.Count > 1)
+            {
+                TempData["Error"] =
+                    "Bàn này đang có nhiều đơn hàng chưa thanh toán. Vui lòng kiểm tra dữ liệu.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (activeOrders.Count == 1)
             {
                 return RedirectToAction(
                     "Details",
                     "DonHang",
-                    new { id = maDon.Value });
+                    new { id = activeOrders[0].MaDon });
             }
 
             return RedirectToAction("Edit", "Ban", new { id });
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SavePositions(
-    [FromBody] List<BanPositionUpdate> positions)
+            [FromBody] List<BanPositionUpdate> positions)
         {
             if (positions == null || positions.Count == 0)
             {
@@ -421,17 +430,17 @@ namespace QuanLyQuanAn.Controllers
 
             var allowedTypes = new[]
             {
-        "counter",
-        "window",
-        "door",
-        "partition",
-        "plant",
-        "decoration"
-    };
+                "counter",
+                "window",
+                "door",
+                "partition",
+                "plant",
+                "decoration"
+            };
 
             if (request.Objects.Any(x =>
                 string.IsNullOrWhiteSpace(x.Id) ||
-                x.Id.Length > 100 ||
+                (x.Label?.Length ?? 0) > 100 ||
                 !allowedTypes.Contains(x.Type) ||
                 x.X < 0 || x.X > 100 ||
                 x.Y < 0 || x.Y > 100 ||
@@ -461,27 +470,65 @@ namespace QuanLyQuanAn.Controllers
                 });
             }
 
-            var existingObjects = await _context.MapObjects
-                .Where(x => x.MaTang == request.MaTang)
-                .ToListAsync();
+            //var existingObjects = await _context.MapObjects
+            //    .Where(x => x.MaTang == request.MaTang)
+            //    .ToListAsync();
 
-            _context.MapObjects.RemoveRange(existingObjects);
+            //_context.MapObjects.RemoveRange(existingObjects);
 
-            var newObjects = request.Objects.Select(x => new MapObject
+            //var newObjects = request.Objects.Select(x => new MapObject
+            //{
+            //    Id = x.Id,
+            //    MaTang = request.MaTang,
+            //    Type = x.Type,
+            //    Label = x.Label ?? string.Empty,
+            //    X = x.X,
+            //    Y = x.Y,
+            //    Width = x.Width,
+            //    Height = x.Height,
+            //    Rotation = x.Rotation
+            //}).ToList();
+
+            //await _context.MapObjects.AddRangeAsync(newObjects);
+            //await _context.SaveChangesAsync();
+
+            await using var transaction =
+    await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                Id = x.Id,
-                MaTang = request.MaTang,
-                Type = x.Type,
-                Label = x.Label ?? string.Empty,
-                X = x.X,
-                Y = x.Y,
-                Width = x.Width,
-                Height = x.Height,
-                Rotation = x.Rotation
-            }).ToList();
+                var existingObjects = await _context.MapObjects
+                    .Where(x => x.MaTang == request.MaTang)
+                    .ToListAsync();
 
-            await _context.MapObjects.AddRangeAsync(newObjects);
-            await _context.SaveChangesAsync();
+                _context.MapObjects.RemoveRange(existingObjects);
+
+                // Delete old objects first so their IDs can be reused.
+                await _context.SaveChangesAsync();
+
+                var newObjects = request.Objects.Select(x => new MapObject
+                {
+                    Id = x.Id,
+                    MaTang = request.MaTang,
+                    Type = x.Type,
+                    Label = x.Label ?? string.Empty,
+                    X = x.X,
+                    Y = x.Y,
+                    Width = x.Width,
+                    Height = x.Height,
+                    Rotation = x.Rotation
+                }).ToList();
+
+                await _context.MapObjects.AddRangeAsync(newObjects);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
 
             return Json(new
             {

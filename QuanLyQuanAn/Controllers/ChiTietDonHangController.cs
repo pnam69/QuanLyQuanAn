@@ -22,6 +22,7 @@ namespace QuanLyQuanAn.Controllers
         {
             var donHang = await _context.DonHangs
                 .Include(d => d.Ban)
+                .Include(d => d.ThanhToan)
                 .FirstOrDefaultAsync(d => d.MaDon == maDon);
 
             if (donHang == null)
@@ -29,8 +30,8 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
-
-            if (donHang.TrangThai == "Đã thanh toán")
+            if (donHang.TrangThai == "Đã thanh toán" ||
+                donHang.ThanhToan != null)
             {
                 TempData["Error"] = "Đơn hàng đã thanh toán, không thể thêm món.";
 
@@ -67,7 +68,9 @@ namespace QuanLyQuanAn.Controllers
                     new { maDon = MaDon });
             }
 
+            // Check order and payment status
             var donHang = await _context.DonHangs
+                .Include(d => d.ThanhToan)
                 .FirstOrDefaultAsync(d => d.MaDon == MaDon);
 
             if (donHang == null)
@@ -75,29 +78,33 @@ namespace QuanLyQuanAn.Controllers
                 return NotFound();
             }
 
+            if (donHang.TrangThai == "Đã thanh toán" ||
+                donHang.ThanhToan != null)
+            {
+                TempData["Error"] = "Đơn hàng đã thanh toán, không thể thêm món.";
 
+                return RedirectToAction(
+                    "Details",
+                    "DonHang",
+                    new { id = MaDon });
+            }
+
+            // Get current dish price from database
             var monAn = await _context.MonAns
-                .FirstOrDefaultAsync(m => m.MaMon == MaMon && m.TrangThai == "Đang bán");
+                .FirstOrDefaultAsync(m =>
+                    m.MaMon == MaMon &&
+                    m.TrangThai == "Đang bán");
 
             if (monAn == null)
             {
-                TempData["Error"] = "Món ăn không tồn tại.";
+                TempData["Error"] = "Món ăn không tồn tại hoặc hiện không được bán.";
 
                 return RedirectToAction(
                     nameof(Create),
                     new { maDon = MaDon });
             }
 
-            if (monAn.TrangThai != "Đang bán")
-            {
-                TempData["Error"] = "Món ăn hiện không được bán.";
-
-                return RedirectToAction(
-                    nameof(Create),
-                    new { maDon = MaDon });
-            }
-
-            // Kiểm tra món đã có trong đơn chưa
+            // Check whether this dish already exists in the order
             var chiTiet = await _context.ChiTietDonHangs
                 .FirstOrDefaultAsync(ct =>
                     ct.MaDon == MaDon &&
@@ -110,10 +117,7 @@ namespace QuanLyQuanAn.Controllers
                     MaDon = MaDon,
                     MaMon = MaMon,
                     SoLuong = SoLuong,
-
-                    // Lưu giá tại thời điểm tạo đơn
                     DonGia = monAn.DonGia,
-
                     ThanhTien = monAn.DonGia * SoLuong
                 };
 
@@ -121,20 +125,11 @@ namespace QuanLyQuanAn.Controllers
             }
             else
             {
-                // Nếu món đã tồn tại thì cộng thêm số lượng
                 chiTiet.SoLuong += SoLuong;
-
-                chiTiet.ThanhTien =
-                    chiTiet.SoLuong * chiTiet.DonGia;
+                chiTiet.ThanhTien = chiTiet.SoLuong * chiTiet.DonGia;
             }
 
-            await _context.SaveChangesAsync();
-
-            // Tính lại tổng tiền của đơn
-            donHang.TongTien = await _context.ChiTietDonHangs
-                .Where(ct => ct.MaDon == MaDon)
-                .SumAsync(ct => ct.ThanhTien);
-
+            // SQL trigger trg_UpdateOrderTotal recalculates TongTien
             await _context.SaveChangesAsync();
 
             return RedirectToAction(
@@ -150,13 +145,10 @@ namespace QuanLyQuanAn.Controllers
         {
             var chiTiet = await _context.ChiTietDonHangs
                 .Include(x => x.DonHang)
+                    .ThenInclude(d => d!.ThanhToan)
                 .FirstOrDefaultAsync(ct => ct.MaChiTiet == id);
 
-            if (chiTiet == null)
-            {
-                return NotFound();
-            }
-            if (chiTiet.DonHang == null)
+            if (chiTiet == null || chiTiet.DonHang == null)
             {
                 return NotFound();
             }
@@ -164,10 +156,10 @@ namespace QuanLyQuanAn.Controllers
             var donHang = chiTiet.DonHang;
             var maDon = chiTiet.MaDon;
 
-            if (donHang.TrangThai == "Đã thanh toán")
+            if (donHang.TrangThai == "Đã thanh toán" ||
+                donHang.ThanhToan != null)
             {
-                TempData["Error"] =
-                    "Đơn hàng đã thanh toán, không thể xóa món.";
+                TempData["Error"] = "Đơn hàng đã thanh toán, không thể xóa món.";
 
                 return RedirectToAction(
                     "Details",
@@ -177,11 +169,7 @@ namespace QuanLyQuanAn.Controllers
 
             _context.ChiTietDonHangs.Remove(chiTiet);
 
-            // Cập nhật lại tổng tiền
-            donHang.TongTien = await _context.ChiTietDonHangs
-                .Where(ct => ct.MaDon == maDon)
-                .SumAsync(ct => ct.ThanhTien);
-
+            // SQL trigger recalculates TongTien after deletion
             await _context.SaveChangesAsync();
 
             return RedirectToAction(

@@ -9,7 +9,8 @@ namespace QuanLyQuanAn.Models
 
         public int MaDon { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Số tiền không hợp lệ")]
+        [Range(typeof(decimal), "0.01", "9999999999999999.99",
+            ErrorMessage = "Số tiền phải lớn hơn 0")]
         [Display(Name = "Số tiền")]
         public decimal SoTien { get; set; }
 

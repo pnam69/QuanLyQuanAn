@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Tạo đơn mang đi";
+    var nhanVien = ViewBag.NhanVien as QuanLyQuanAn.Models.NhanVien;
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0 rounded-lg">
+
+                <div class="card-header bg-white border-bottom p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded p-2 me-3">
+                            <i class="bi bi-bag fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0">Tạo đơn mang đi</h4>
+                            <small class="text-muted">
+                                Tạo đơn hàng không cần bàn phục vụ
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary small">
+                            NHÂN VIÊN PHỤC VỤ
+                        </label>
+                        <input type="text"
+                               class="form-control bg-light"
+                               value="@nhanVien?.HoTen"
+                               readonly />
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Đơn mang đi không sử dụng bàn. Sau khi tạo đơn,
+                        bạn có thể thêm món ăn và tiến hành thanh toán.
+                    </div>
+
+                    <form asp-action="CreateTakeaway" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a asp-action="Index"
+                               class="btn btn-light border px-4">
+                                Hủy
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary px-4">
+                                <i class="bi bi-plus-lg me-1"></i>
+                                Tạo đơn mang đi
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

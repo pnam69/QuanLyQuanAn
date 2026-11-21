@@ -27,7 +27,7 @@
 
                 <div class="card-body p-4">
                     <form asp-action="Create" method="post">
-                        
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 mb-4 rounded shadow-sm" role="alert"></div>
 
                         <div class="mb-4">
@@ -52,11 +52,14 @@
                                       <path d="M4 2v2H2V2zm1 12v-2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m5 10v-2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1M9 2v2H7V2zm5 0v2h-2V2zM4 7v2H2V7zm5 0v2H7V7zm5 0h-2v2h2zM4 12v2H2v-2zm5 0v2H7v-2zm5 0v2h-2v-2zM12 1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm-1 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1z"/>
                                     </svg>
                                 </span>
-                                <select name="MaBan" class="form-select bg-light border-start-0" required>
+                                <select name="MaBan" id="MaBan" class="form-select bg-light border-start-0" required>
                                     <option value="" selected disabled>-- Vui lòng chọn bàn --</option>
+
                                     @foreach (var ban in bans)
                                     {
-                                        <option value="@ban.MaBan">Bàn @ban.SoBan - @ban.SoCho chỗ</option>
+                                        <option value="@ban.MaBan">
+                                            Bàn @ban.SoBan - @ban.SoCho chỗ
+                                        </option>
                                     }
                                 </select>
                             </div>
@@ -69,7 +72,15 @@
 
                         <div class="d-flex justify-content-end gap-2">
                             <a asp-action="Index" class="btn btn-light border px-4">Hủy</a>
-                            <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                            @if (!bans.Any())
+                            {
+                                <div class="alert alert-warning w-100 mb-3">
+                                    Hiện không còn bàn trống. Vui lòng kiểm tra sơ đồ bàn.
+                                </div>
+                            }
+                            <button type="submit"
+                                    class="btn btn-primary px-4 shadow-sm"
+                                    disabled="@(!bans.Any())">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1 mb-1" viewBox="0 0 16 16">
                                   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                 </svg>

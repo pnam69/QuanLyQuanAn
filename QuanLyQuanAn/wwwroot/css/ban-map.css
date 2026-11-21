@@ -1,4 +1,5 @@
-﻿/* =========================================================
+﻿
+/* =========================================================
    RESTAURANT FLOOR MAP
    Logical canvas: 1200 x 700
    ========================================================= */
@@ -10,10 +11,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 12px;
-    background: #e9ecef;
+    padding: 16px;
+    background: #e9edf0;
     border: 1px solid #d7dce1;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .table-map {
@@ -23,21 +24,35 @@
     height: 700px;
     overflow: hidden;
     transform-origin: top center;
-    background-color: #d8c8ad;
-    background-image: linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), repeating-linear-gradient( 0deg, #d9c9ae 0px, #d9c9ae 48px, #d3c2a5 49px, #d3c2a5 50px );
-    background-size: 50px 50px, 50px 50px, auto;
-    box-shadow: 0 5px 18px rgba(0,0,0,.16);
-    border: 0;
+    background-color: #d8c7aa;
+    background-image: linear-gradient( to right, rgba(90, 70, 45, .10) 1px, transparent 1px ), linear-gradient( to bottom, rgba(90, 70, 45, .10) 1px, transparent 1px ), repeating-linear-gradient( 0deg, #d9c9ae 0px, #d9c9ae 49px, #cdbb9d 50px );
+    background-size: 25px 25px, 25px 25px, auto;
+    box-shadow: 0 8px 24px rgba(0,0,0,.17);
+    border: 1px solid #b7a78e;
     isolation: isolate;
 }
 
-/* Room walls */
+/* =========================================================
+   LAYER ORDER
+   Environment: 1
+   Walls: 5
+   Furniture: 10
+   Tables: 20
+   Selection: 40
+   ========================================================= */
+
+.map-environment {
+    position: absolute;
+    inset: 18px;
+    z-index: 1;
+    pointer-events: none;
+}
 
 .map-wall {
     position: absolute;
-    z-index: 20;
-    background: #4c4035;
-    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    z-index: 5;
+    background: linear-gradient( 90deg, #493b30, #695747 45%, #493b30 );
+    box-shadow: 0 3px 7px rgba(0,0,0,.28), inset 0 2px 2px rgba(255,255,255,.12);
     pointer-events: none;
 }
 
@@ -50,12 +65,12 @@
 
 .map-wall-top {
     top: 0;
-    border-bottom: 4px solid #a18c72;
+    border-bottom: 4px solid #a58b6b;
 }
 
 .map-wall-bottom {
     bottom: 0;
-    border-top: 4px solid #a18c72;
+    border-top: 4px solid #a58b6b;
 }
 
 .map-wall-left,
@@ -67,34 +82,29 @@
 
 .map-wall-left {
     left: 0;
-    border-right: 4px solid #a18c72;
+    border-right: 4px solid #a58b6b;
 }
 
 .map-wall-right {
     right: 0;
-    border-left: 4px solid #a18c72;
+    border-left: 4px solid #a58b6b;
 }
 
-.map-environment {
-    position: absolute;
-    inset: 18px;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Tables */
+/* =========================================================
+   TABLES
+   ========================================================= */
 
 .map-table {
     position: absolute;
-    z-index: 10;
+    z-index: 20;
     width: 94px;
     height: 76px;
     transform: translate(-50%, -50%);
     border: 2px solid #536b5c;
     border-radius: 12px;
-    background: #f5f5ef;
+    background: linear-gradient( 145deg, #ffffff, #e9eee8 );
     color: #26352c;
-    box-shadow: 0 3px 7px rgba(0,0,0,.18);
+    box-shadow: 0 4px 8px rgba(0,0,0,.17), inset 0 1px 2px rgba(255,255,255,.9);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,45 +113,47 @@
     padding: 6px;
     cursor: pointer;
     user-select: none;
-    transition: box-shadow .12s ease, border-color .12s ease;
+    transition: box-shadow .15s ease, border-color .15s ease, filter .15s ease;
 }
 
     .map-table:hover {
-        box-shadow: 0 5px 12px rgba(0,0,0,.24);
-        z-index: 12;
+        box-shadow: 0 7px 15px rgba(0,0,0,.25);
+        filter: brightness(1.03);
+        z-index: 21;
     }
 
 .map-table-number {
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 800;
+    font-size: 16px;
     line-height: 1.2;
 }
 
 .map-table-status {
     font-size: 11px;
+    font-weight: 600;
     line-height: 1.2;
     white-space: nowrap;
 }
 
 .map-table[data-status="Trống"] {
     border-color: #198754;
-    background: #e8f5ec;
+    background: linear-gradient(145deg, #f2fff5, #d9f0df);
 }
 
 .map-table[data-status="Đã đặt"] {
     border-color: #d39e00;
-    background: #fff4d6;
+    background: linear-gradient(145deg, #fff9e8, #f9e8b9);
 }
 
 .map-table[data-status="Đang phục vụ"] {
     border-color: #dc3545;
-    background: #fde8e9;
+    background: linear-gradient(145deg, #fff1f1, #f6d5d7);
 }
 
 .map-table.is-selected {
     outline: 3px solid #0d6efd;
-    outline-offset: 3px;
-    z-index: 30;
+    outline-offset: 4px;
+    z-index: 40;
 }
 
 .table-map.editing .map-table {
@@ -152,11 +164,13 @@
         cursor: grabbing;
     }
 
-/* Furniture objects */
+/* =========================================================
+   FURNITURE BASE
+   ========================================================= */
 
 .map-object {
     position: absolute;
-    z-index: 5;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,7 +180,12 @@
     touch-action: none;
     cursor: pointer;
     color: #292929;
+    transition: filter .12s ease, box-shadow .12s ease;
 }
+
+    .map-object:hover {
+        filter: brightness(1.08);
+    }
 
 .map-object-label {
     display: block;
@@ -174,7 +193,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     text-align: center;
     pointer-events: none;
@@ -190,30 +209,35 @@
     cursor: grabbing;
 }
 
-/* Checkout counter */
+/* =========================================================
+   COUNTER
+   ========================================================= */
 
 .map-object-counter {
-    border: 2px solid #60432d;
-    border-radius: 5px;
+    border: 2px solid #543820;
+    border-radius: 6px;
     color: #fff;
-    background: linear-gradient(180deg, rgba(255,255,255,.12), transparent 35%), repeating-linear-gradient( 90deg, #91643f 0, #91643f 28px, #805735 29px, #805735 31px );
-    box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    background: linear-gradient( 180deg, rgba(255,255,255,.2), transparent 35% ), repeating-linear-gradient( 90deg, #a9784e 0px, #a9784e 27px, #805735 28px, #805735 31px );
+    box-shadow: 0 4px 8px rgba(0,0,0,.28), inset 0 1px 2px rgba(255,255,255,.2);
 }
 
     .map-object-counter::before {
         content: "";
         position: absolute;
         inset: 5px;
-        border: 1px solid rgba(255,255,255,.25);
+        border: 1px solid rgba(255,255,255,.35);
+        border-radius: 3px;
         pointer-events: none;
     }
 
-/* Windows */
+/* =========================================================
+   WINDOWS
+   ========================================================= */
 
 .map-object-window {
-    border: 5px solid #735b43;
-    background: linear-gradient(135deg, #d8f0f7, #8dc5d8);
-    box-shadow: inset 0 0 0 2px #f8f8f8;
+    border: 5px solid #66503b;
+    background: linear-gradient( 135deg, #d9f5fc, #8bc9dc 50%, #c3eaf3 );
+    box-shadow: inset 0 0 0 2px #f8f8f8, 0 3px 6px rgba(0,0,0,.25);
 }
 
     .map-object-window::before {
@@ -223,7 +247,7 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background: #f8f8f8;
+        background: #fff;
         transform: translateX(-50%);
     }
 
@@ -234,16 +258,18 @@
         left: 0;
         right: 0;
         height: 3px;
-        background: #f8f8f8;
+        background: #fff;
         transform: translateY(-50%);
     }
 
-/* Doors */
+/* =========================================================
+   DOORS
+   ========================================================= */
 
 .map-object-door {
-    border: 3px solid #68472f;
-    background: #b98657;
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,.2);
+    border: 3px solid #583a26;
+    background: linear-gradient( 135deg, #d1a16d, #a87546 55%, #8c5d38 );
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.18), 0 3px 6px rgba(0,0,0,.24);
 }
 
     .map-object-door::after {
@@ -254,30 +280,35 @@
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #f4d28d;
+        background: #f8d78e;
+        box-shadow: 0 0 2px rgba(0,0,0,.4);
         transform: translateY(-50%);
     }
 
     .map-object-door .map-object-label {
         color: #fff;
-        text-shadow: 0 1px 2px rgba(0,0,0,.7);
+        text-shadow: 0 1px 3px rgba(0,0,0,.8);
     }
 
-/* Partitions */
+/* =========================================================
+   PARTITIONS
+   ========================================================= */
 
 .map-object-partition {
-    border: 1px solid #6b6258;
-    background: repeating-linear-gradient( 90deg, #b8a997 0, #b8a997 12px, #9f8d7a 13px, #9f8d7a 15px );
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    border: 1px solid #716354;
+    background: repeating-linear-gradient( 90deg, #c4b4a0 0px, #c4b4a0 12px, #a18e79 13px, #a18e79 15px );
+    box-shadow: 0 3px 5px rgba(0,0,0,.22), inset 0 1px 1px rgba(255,255,255,.5);
 }
 
-/* Plants */
+/* =========================================================
+   PLANTS
+   ========================================================= */
 
 .map-object-plant {
     border: 2px solid #477348;
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, #6b9d4e 0 18%, transparent 19%), radial-gradient(circle at 30% 35%, #3e7d42 0 20%, transparent 21%), radial-gradient(circle at 70% 35%, #4e8d4a 0 20%, transparent 21%), radial-gradient(circle at 35% 70%, #568f42 0 20%, transparent 21%), radial-gradient(circle at 70% 70%, #39733b 0 20%, transparent 21%), #d6e5c9;
-    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    background: radial-gradient( circle at 50% 50%, #8ebd61 0 15%, transparent 16% ), radial-gradient( circle at 30% 35%, #3e7d42 0 20%, transparent 21% ), radial-gradient( circle at 70% 35%, #4e8d4a 0 20%, transparent 21% ), radial-gradient( circle at 35% 70%, #568f42 0 20%, transparent 21% ), radial-gradient( circle at 70% 70%, #39733b 0 20%, transparent 21% ), #d6e5c9;
+    box-shadow: 0 3px 7px rgba(0,0,0,.24), inset 0 1px 3px rgba(255,255,255,.6);
 }
 
     .map-object-plant .map-object-label {
@@ -287,16 +318,20 @@
         color: #315b32;
     }
 
-/* Generic decoration */
+/* =========================================================
+   DECORATIONS
+   ========================================================= */
 
 .map-object-decoration {
     border: 2px solid #806b50;
     border-radius: 8px;
-    background: linear-gradient(145deg, #f4e8c9, #d9c49c);
-    box-shadow: 0 2px 5px rgba(0,0,0,.18);
+    background: linear-gradient( 145deg, #f8efd9, #e0cba3 55%, #c9b18a );
+    box-shadow: 0 3px 6px rgba(0,0,0,.2), inset 0 1px 2px rgba(255,255,255,.7);
 }
 
-/* Object editing handles */
+/* =========================================================
+   EDITING HANDLES
+   ========================================================= */
 
 .map-object-handle {
     position: absolute;
@@ -306,6 +341,7 @@
     border-radius: 3px;
     background: #0d6efd;
     z-index: 50;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
 }
 
     .map-object-handle.resize {
@@ -331,7 +367,9 @@
             border-left: 2px solid #0d6efd;
         }
 
-/* Editing UI */
+/* =========================================================
+   EDITOR UI
+   ========================================================= */
 
 .table-map.editing {
     outline: 2px dashed rgba(13,110,253,.55);
@@ -346,7 +384,7 @@
     padding: 16px;
     background: #f8f9fa;
     border: 1px solid #dee2e6;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .map-status-dot {
@@ -371,6 +409,10 @@
     display: none !important;
 }
 
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 767.98px) {
     .table-map-wrapper {
         justify-content: flex-start;
@@ -384,4 +426,16 @@
     .map-editor-toolbar {
         align-items: stretch;
     }
+}
+
+/* Hide handles outside edit mode */
+#tableMap:not(.editing) .map-object-handle {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+/* Show handles for selected furniture during edit mode */
+#tableMap.editing .map-object.is-selected .map-object-handle {
+    display: block;
+    pointer-events: auto;
 }

@@ -87,6 +87,8 @@ namespace QuanLyQuanAn.Controllers
             var paidOrders = _context.DonHangs
                 .Where(d =>
                     d.TrangThai == "Đã thanh toán" &&
+                    d.ThanhToan != null &&
+                    d.ThanhToan.TrangThai == "Đã thanh toán" &&
                     d.NgayLap >= startDate &&
                     d.NgayLap < endExclusive);
 
@@ -100,6 +102,8 @@ namespace QuanLyQuanAn.Controllers
                 .Include(ct => ct.DonHang)
                 .Where(ct =>
                     ct.DonHang!.TrangThai == "Đã thanh toán" &&
+                    ct.DonHang.ThanhToan != null &&
+                    ct.DonHang.ThanhToan.TrangThai == "Đã thanh toán" &&
                     ct.DonHang.NgayLap >= startDate &&
                     ct.DonHang.NgayLap < endExclusive)
                 .GroupBy(ct => new
@@ -160,6 +164,8 @@ namespace QuanLyQuanAn.Controllers
                 .Include(d => d.NhanVien)
                 .Where(d =>
                     d.TrangThai == "Đã thanh toán" &&
+                    d.ThanhToan != null &&
+                    d.ThanhToan.TrangThai == "Đã thanh toán" &&
                     d.NgayLap >= startDate &&
                     d.NgayLap < endExclusive)
                 .OrderBy(d => d.NgayLap)
@@ -239,7 +245,7 @@ namespace QuanLyQuanAn.Controllers
                     donHang.MaBan;
 
                 worksheet.Cell(currentRow, 3).Value =
-                    donHang.Ban?.SoBan ?? "";
+                    donHang.Ban?.SoBan ?? "Takeaway";
 
                 worksheet.Cell(currentRow, 4).Value =
                     donHang.NhanVien?.HoTen ?? "";
@@ -367,8 +373,8 @@ namespace QuanLyQuanAn.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> ExportPdf(
-    DateTime? tuNgay,
-    DateTime? denNgay)
+            DateTime? tuNgay,
+            DateTime? denNgay)
         {
             DateTime startDate =
                 tuNgay?.Date ?? DateTime.Today.AddDays(-30);
@@ -391,6 +397,8 @@ namespace QuanLyQuanAn.Controllers
                 .Include(d => d.NhanVien)
                 .Where(d =>
                     d.TrangThai == "Đã thanh toán" &&
+                    d.ThanhToan != null &&
+                    d.ThanhToan.TrangThai == "Đã thanh toán" &&
                     d.NgayLap >= startDate &&
                     d.NgayLap < endExclusive)
                 .OrderBy(d => d.NgayLap)
@@ -523,13 +531,13 @@ namespace QuanLyQuanAn.Controllers
                                         table.Cell()
                                             .Element(BodyCell)
                                             .AlignCenter()
-                                            .Text(order.MaBan.ToString());
+                                            .Text(order.MaBan?.ToString() ?? "-");
 
                                         table.Cell()
                                             .Element(BodyCell)
                                             .AlignCenter()
                                             .Text(
-                                                order.Ban?.SoBan ?? "");
+                                                order.Ban?.SoBan ?? "Takeaway");
 
                                         table.Cell()
                                             .Element(BodyCell)

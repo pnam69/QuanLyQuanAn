@@ -95,7 +95,17 @@
     };
 
     const clone = value => JSON.parse(JSON.stringify(value));
+    const GRID_SIZE = 25;
 
+
+
+    function snapPercent(value, totalSize) {
+        const pixelPosition = (value / 100) * totalSize;
+        const snappedPosition =
+            Math.round(pixelPosition / GRID_SIZE) * GRID_SIZE;
+
+        return clamp((snappedPosition / totalSize) * 100, 0, 100);
+    }
     function showMessage(message, isError = false) {
         if (!elements.message) return;
 
@@ -213,6 +223,8 @@
         selectedObject = null;
         selectedTable = null;
 
+        pointerOperation = null;
+
         if (elements.objectPanel) {
             elements.objectPanel.hidden = true;
         }
@@ -269,8 +281,8 @@
             id: `map-object-${Date.now()}-${++objectIdCounter}`,
             type,
             label: defaults.label,
-            x: 50,
-            y: 50,
+            x: snapPercent(50, MAP_WIDTH),
+            y: snapPercent(50, MAP_HEIGHT),
             width: defaults.width,
             height: defaults.height,
             rotation: 0
@@ -400,6 +412,30 @@
             limits[property][1]
         );
 
+        if (property === "x") {
+            item.x = snapPercent(item.x, MAP_WIDTH);
+        }
+
+        if (property === "y") {
+            item.y = snapPercent(item.y, MAP_HEIGHT);
+        }
+
+        if (property === "width") {
+            item.width = Math.max(
+                GRID_SIZE / MAP_WIDTH * 100,
+                Math.round(item.width / 100 * MAP_WIDTH / GRID_SIZE)
+                * GRID_SIZE / MAP_WIDTH * 100
+            );
+        }
+
+        if (property === "height") {
+            item.height = Math.max(
+                GRID_SIZE / MAP_HEIGHT * 100,
+                Math.round(item.height / 100 * MAP_HEIGHT / GRID_SIZE)
+                * GRID_SIZE / MAP_HEIGHT * 100
+            );
+        }
+
         applyObjectStyle(selectedObject, item);
     }
 
@@ -516,6 +552,39 @@
             return;
         }
 
+        const operation = pointerOperation;
+
+        if (operation.operation === "move") {
+            operation.item.x = snapPercent(
+                operation.item.x,
+                MAP_WIDTH
+            );
+
+            operation.item.y = snapPercent(
+                operation.item.y,
+                MAP_HEIGHT
+            );
+        }
+
+        if (operation.operation === "resize") {
+            operation.item.width = Math.max(
+                GRID_SIZE / MAP_WIDTH * 100,
+                Math.round(
+                    (operation.item.width / 100 * MAP_WIDTH) / GRID_SIZE
+                ) * GRID_SIZE / MAP_WIDTH * 100
+            );
+
+            operation.item.height = Math.max(
+                GRID_SIZE / MAP_HEIGHT * 100,
+                Math.round(
+                    (operation.item.height / 100 * MAP_HEIGHT) / GRID_SIZE
+                ) * GRID_SIZE / MAP_HEIGHT * 100
+            );
+        }
+
+        applyObjectStyle(operation.element, operation.item);
+        updatePropertyInputs(operation.item);
+
         pointerOperation = null;
     }
 
@@ -576,7 +645,26 @@
             return;
         }
 
-        pointerOperation.element.classList.remove("is-dragging");
+        const table = pointerOperation.element;
+
+        const x = snapPercent(
+            Number(table.dataset.x),
+            MAP_WIDTH
+        );
+
+        const y = snapPercent(
+            Number(table.dataset.y),
+            MAP_HEIGHT
+        );
+
+        table.dataset.x = x;
+        table.dataset.y = y;
+
+        table.style.left = `${x}%`;
+        table.style.top = `${y}%`;
+
+        table.classList.remove("is-dragging");
+
         pointerOperation = null;
     }
 

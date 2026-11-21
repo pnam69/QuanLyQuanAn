@@ -69,7 +69,11 @@
                             </svg>
                             Tạo đơn hàng
                         </a>
-
+                        <a asp-action="CreateTakeaway"
+                           class="btn btn-outline-primary shadow-sm text-nowrap">
+                            <i class="bi bi-bag me-1"></i>
+                            Tạo đơn mang đi
+                        </a>
                     </form>
                 </div>
 
@@ -98,7 +102,9 @@
                                 <tr>
                                     <td class="ps-4 fw-bold text-primary">#@item.MaDon</td>
                                     <td>
-                                        <span class="fw-semibold">Bàn @item.Ban?.SoBan</span>
+                                        <span class="fw-semibold">
+                                            @(item.Ban != null ? $"Bàn {item.Ban.SoBan}" : "Takeaway")
+                                        </span>
                                     </td>
                                     <td>
                                         <span class="text-secondary">@item.NhanVien?.HoTen</span>
@@ -128,7 +134,7 @@
                                                 </svg>
                                             </a>
 
-                                            @if (item.TrangThai != "Đã thanh toán")
+                                            @if (item.TrangThai != "Đã thanh toán" && item.ThanhToan == null)
                                             {
                                                 <form asp-action="Delete" asp-route-id="@item.MaDon" method="post" class="d-inline m-0" onsubmit="return confirm('Bạn có chắc muốn xóa đơn hàng này?');">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger rounded-0 rounded-end" title="Xóa đơn">

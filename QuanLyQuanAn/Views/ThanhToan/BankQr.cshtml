@@ -1,0 +1,91 @@
+﻿@model QuanLyQuanAn.Models.DonHang
+
+@{
+    ViewData["Title"] = "Thanh toán QR BIDV";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-header bg-white text-center py-4">
+                    <h4 class="fw-bold text-primary mb-1">
+                        Thanh toán BIDV
+                    </h4>
+                    <small class="text-muted">
+                        Quét mã QR bằng ứng dụng ngân hàng
+                    </small>
+                </div>
+
+                <div class="card-body p-4 text-center">
+
+                    <div class="mb-3">
+                        <span class="text-muted">Mã đơn hàng</span>
+                        <h5 class="fw-bold">
+                            #@Model.MaDon
+                        </h5>
+                    </div>
+
+                    <div class="bg-light rounded p-3 mb-3">
+                        <div class="text-muted small">
+                            Tổng tiền cần thanh toán
+                        </div>
+
+                        <div class="fs-3 fw-bold text-danger">
+                            @Model.TongTien.ToString("N0") đ
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <img src="@ViewBag.QrUrl"
+                             alt="BIDV payment QR code"
+                             class="img-fluid"
+                             style="max-width:300px;" />
+                    </div>
+
+                    <div class="alert alert-info text-start">
+                        <div class="fw-bold mb-2">
+                            Thông tin chuyển khoản
+                        </div>
+
+                        <div>
+                            Ngân hàng: BIDV
+                        </div>
+                        <div>
+                            Số tài khoản: <strong>@ViewBag.AccountNumber</strong>
+                        </div>
+
+                        <div>
+                            Chủ tài khoản: <strong>@ViewBag.AccountName</strong>
+                        </div>
+                        <div>
+                            Nội dung:
+                            <strong>@ViewBag.TransferContent</strong>
+                        </div>
+
+                        <div class="mt-2">
+                            Vui lòng chuyển đúng số tiền hiển thị.
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning text-start small">
+                        Giao dịch đang chờ xác nhận.
+                        Đơn hàng và bàn vẫn được giữ nguyên trạng thái
+                        cho đến khi nhận được xác nhận thanh toán.
+                    </div>
+
+                    <a asp-controller="DonHang"
+                       asp-action="Details"
+                       asp-route-id="@Model.MaDon"
+                       class="btn btn-outline-secondary w-100">
+                        Quay lại đơn hàng
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
