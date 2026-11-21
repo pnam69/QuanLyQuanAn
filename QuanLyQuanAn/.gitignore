@@ -1,2 +1,58 @@
-# Visual Studio temporary files
+
+# Visual Studio
 .vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vspscc
+*.vssscc
+*.sdf
+*.opensdf
+*.cachefile
+*.vsidx
+
+# Visual Studio temporary folders
+**/.vs/
+**/FileContentIndex/
+**/ComponentModelCache/
+**/DesignTimeBuild/
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+
+# .NET
+project.lock.json
+project.fragment.lock.json
+*.nuget.g.props
+*.nuget.g.targets
+
+# User-specific files
+*.userprefs
+*.rsuser
+*.sln.iml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+
+# Publish output
+publish/
+wwwroot/dist/
+
+# Node.js, if used
+node_modules/
